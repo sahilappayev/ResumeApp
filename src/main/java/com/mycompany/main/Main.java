@@ -5,8 +5,10 @@
  */
 package com.mycompany.main;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import com.mycompany.bean.User;
+import com.mycompany.dao.impl.UserDaoImpl;
+import com.mycompany.dao.inter.UserDaoInter;
+import java.util.List;
 
 /**
  *
@@ -15,14 +17,10 @@ import java.sql.DriverManager;
 public class Main {
 
     public static void main(String[] args) {
+        UserDaoInter userDao = Context.instanceUserDao();
+        List<User> list = userDao.getAll();
+        System.out.println(list);
+    
         
-    }
-
-    public static Connection connect() throws Exception {
-        String url = "jdbc:mysql://localhost:3306/resume?serverTimezone=UTC";
-        String user = "root";
-        String password = "12345";
-
-        return DriverManager.getConnection(url, user, password);
-    }
+    }   
 }

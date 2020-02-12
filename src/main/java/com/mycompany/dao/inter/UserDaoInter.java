@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface UserDaoInter {
     public List<User> getAll();
+    public User getById(int id);
     public boolean update(User u);
     public boolean delete(int id);
     
