@@ -25,7 +25,7 @@ public class UserDaoImpl extends AbstractDao {
         List<User> result = new ArrayList<>();
         try (Connection connection = connect()) {
             Statement statement = connection.createStatement();
-            statement.execute("select * from user");
+            statement.execute("select * from resume.user");
             ResultSet rs = statement.getResultSet();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -47,7 +47,7 @@ public class UserDaoImpl extends AbstractDao {
         User result = null;
         try (Connection connection = connect()) {
             Statement statement = connection.createStatement();
-            statement.execute("select * from user where id=" + userId);
+            statement.execute("select * from resume.user where id=" + userId);
             ResultSet rs = statement.getResultSet();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -69,7 +69,7 @@ public class UserDaoImpl extends AbstractDao {
         try (Connection connection = connect()) {
             //preventing sql injection
             //charecter encoding
-            PreparedStatement statement = connection.prepareStatement("update user set name = ?, surname = ?, age = ?, phone = ?, email = ? where id = ?");
+            PreparedStatement statement = connection.prepareStatement("update resume.user set name = ?, surname = ?, age = ?, phone = ?, email = ? where id = ?");
             statement.setString(1, u.getName());
             statement.setString(2, u.getSurname());
             statement.setInt(3, u.getAge());
@@ -87,7 +87,23 @@ public class UserDaoImpl extends AbstractDao {
     public boolean delete(int id) {
         try (Connection connection = connect()) {
             PreparedStatement statement = (PreparedStatement) connection.createStatement();
-            return statement.execute("delete from user where id =" + id);
+            return statement.execute("delete from resume.user where id =" + id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean add(User u) {
+        try (Connection connection = connect()) {
+            PreparedStatement statement = connection.prepareStatement("insert into resume.user (name, surname, age, phone, email) values (?,?,?,?,?)");
+            statement.setString(1, u.getName());
+            statement.setString(2, u.getSurname());
+            statement.setInt(3, u.getAge());
+            statement.setString(4, u.getPhone());
+            statement.setString(5, u.getEmail());
+            return statement.execute();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;

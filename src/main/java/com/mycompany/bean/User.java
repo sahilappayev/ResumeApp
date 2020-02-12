@@ -19,7 +19,7 @@ public class User {
 
     public User() {
     }
-
+    
     public User(int id, String name, String surname, int age, String phone, String email) {
         this.id = id;
         this.name = name;
@@ -79,7 +79,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "id=" + id + ", name=" + name + ", surname=" + surname + ", age=" + age + ", phone=" + phone + ", email=" + email;
+        return ("id=" + id + ", name=" + name + ", surname=" + surname + ", age=" + age + ", phone=" + phone + ", email=" + email);
     }
     
     

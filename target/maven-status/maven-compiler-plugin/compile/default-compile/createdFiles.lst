@@ -1,0 +1,6 @@
+com\mycompany\bean\User.class
+com\mycompany\main\Main.class
+com\mycompany\dao\impl\UserDaoImpl.class
+com\mycompany\dao\inter\UserDaoInter.class
+com\mycompany\dao\AbstractDao.class
+com\mycompany\main\Context.class
