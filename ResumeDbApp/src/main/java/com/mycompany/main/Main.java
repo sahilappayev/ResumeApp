@@ -5,22 +5,19 @@
  */
 package com.mycompany.main;
 
-import com.mycompany.bean.User;
-import com.mycompany.dao.inter.UserDaoInter;
+import com.mycompany.dao.inter.EmploymentHistoryDaoInter;
 import java.util.List;
 
 /**
  *
- * @author Admin
+ * @author SahilAppayev
  */
 public class Main {
-
+    // bazani temsil eden klasslara model ve ya entity deyilir
     public static void main(String[] args) {
-        UserDaoInter userDao = Context.instanceUserDao();
-        List<User> list = userDao.getAll();
-        for(User u: list){
-            System.out.println(u);
-        }
-
+        EmploymentHistoryDaoInter userDao = Context.instanceEmploymentHistoryDao();
+        List list = userDao.getAllEmploymentHistoryByUserId(1);
+        System.out.println(list);
+        
     }
 }

@@ -5,7 +5,6 @@
  */
 package com.mycompany.dao;
 
-import com.mycompany.dao.inter.UserDaoInter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -13,7 +12,7 @@ import java.sql.DriverManager;
  *
  * @author SahilAppayev
  */
-public abstract class AbstractDao implements UserDaoInter{
+public abstract class AbstractDao{
     public static Connection connect() throws Exception{
         String url = "jdbc:mysql://localhost:3306/resume?serverTimezone=UTC";
         String user = "root";

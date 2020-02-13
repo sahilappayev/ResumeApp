@@ -5,9 +5,14 @@
  */
 package com.mycompany.dao.impl;
 
-import com.mycompany.bean.User;
+import com.mycompany.entity.Country;
+import com.mycompany.entity.Skill;
+import com.mycompany.entity.User;
+import com.mycompany.entity.UserSkill;
 import com.mycompany.dao.AbstractDao;
+import com.mycompany.dao.inter.UserDaoInter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -16,25 +21,48 @@ import java.util.List;
 
 /**
  *
- * @author Admin
+ * @author SahilAppayev
  */
-public class UserDaoImpl extends AbstractDao {
+public class UserDaoImpl extends AbstractDao implements UserDaoInter {
+
+    private User getUser(ResultSet rs) throws Exception {
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        String surname = rs.getString("surname");
+        int age = rs.getInt("age");
+        String phone = rs.getString("phone");
+        String mail = rs.getString("email");
+        String adress = rs.getString("adress");
+        String profileDescription = rs.getString("profile_description");
+        Date birthDate = rs.getDate("birthdate");
+        int birthPlaceId = rs.getInt("birthplace_id");
+        int nationalityId = rs.getInt("nationality_id");
+        String birthPlaceStr = rs.getString("birthplace");
+        String nationalityStr = rs.getString("nationality");
+
+        Country birthPlace = new Country(birthPlaceId, birthPlaceStr, null);
+        Country nationality = new Country(nationalityId, null, nationalityStr);
+
+        return new User(id, name, surname, age, phone, mail, adress, birthDate, birthPlace, nationality, profileDescription);
+    }
 
     @Override
     public List<User> getAll() {
         List<User> result = new ArrayList<>();
         try (Connection connection = connect()) {
             Statement statement = connection.createStatement();
-            statement.execute("select * from resume.user");
+            statement.execute("SELECT\n"
+                    + "	u.*,\n"
+                    + "	c.country_name birthplace,\n"
+                    + "	n.nationality \n"
+                    + "FROM\n"
+                    + "	USER u\n"
+                    + "	LEFT JOIN country c ON u.birthplace_id = c.id\n"
+                    + "	LEFT JOIN country n ON u.nationality_id = n.id");
             ResultSet rs = statement.getResultSet();
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String surname = rs.getString("surname");
-                int age = rs.getInt("age");
-                String phone = rs.getString("phone");
-                String mail = rs.getString("email");
-                result.add(new User(id, name, surname, age, phone, mail));
+                User user = getUser(rs);
+                result.add(user);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -47,16 +75,18 @@ public class UserDaoImpl extends AbstractDao {
         User result = null;
         try (Connection connection = connect()) {
             Statement statement = connection.createStatement();
-            statement.execute("select * from resume.user where id=" + userId);
+            statement.execute("SELECT\n"
+                    + "	u.*,\n"
+                    + "	c.country_name birthplace,\n"
+                    + "	n.nationality \n"
+                    + "FROM\n"
+                    + "	USER u\n"
+                    + "	LEFT JOIN country c ON u.birthplace_id = c.id\n"
+                    + "	LEFT JOIN country n ON u.nationality_id = n.id where u.id=" + userId);
             ResultSet rs = statement.getResultSet();
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String surname = rs.getString("surname");
-                int age = rs.getInt("age");
-                String phone = rs.getString("phone");
-                String mail = rs.getString("email");
-                result = new User(id, name, surname, age, phone, mail);
+                User user = getUser(rs);
+                result = user;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -109,5 +139,4 @@ public class UserDaoImpl extends AbstractDao {
             return false;
         }
     }
-
 }
