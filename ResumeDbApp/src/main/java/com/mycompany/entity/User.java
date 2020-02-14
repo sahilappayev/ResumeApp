@@ -25,7 +25,7 @@ public class User {
     private Country natioanality;
     private String profileDescription;
     private List<UserSkill> skills;
-    
+    private List<EmploymentHistory> employmentHistorys;
     
     public User() {
     }
@@ -34,6 +34,24 @@ public class User {
         this.id = id;
     }
 
+    public User(int id, String name, String surname, int age, String phone, String email, String adress, Date birthDate, Country birthPlace, Country natioanality, String profileDescription, List<UserSkill> skills, List<EmploymentHistory> employmentHistorys) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.phone = phone;
+        this.email = email;
+        this.adress = adress;
+        this.birthDate = birthDate;
+        this.birthPlace = birthPlace;
+        this.natioanality = natioanality;
+        this.profileDescription = profileDescription;
+        this.skills = skills;
+        this.employmentHistorys = employmentHistorys;
+    }
+    
+    
+    
     public User(int id, String name, String surname, int age, String phone, String email, String adress, Date birthdate, Country birthplace, Country natioanality, String prifileDescription) {
         this.id = id;
         this.name = name;
@@ -152,10 +170,20 @@ public class User {
         this.skills = skills;
     }
 
+    public List<EmploymentHistory> getEmploymentHistorys() {
+        return employmentHistorys;
+    }
+
+    public void setEmploymentHistorys(List<EmploymentHistory> employmentHistorys) {
+        this.employmentHistorys = employmentHistorys;
+    }
+
     @Override
     public String toString() {
-        return "id=" + id + ", name=" + name + ", surname=" + surname + ", age=" + age + ", phone=" + phone + ", email=" + email + ", adress=" + adress + ", birthDate=" + birthDate + ", birthPlace=" + birthPlace + ", natioanality=" + natioanality + ", prifileDescription=" + profileDescription + "\n";
+        return "User{" + "id=" + id + ", name=" + name + ", surname=" + surname + ", age=" + age + ", phone=" + phone + ", email=" + email + ", adress=" + adress + ", birthDate=" + birthDate + ", birthPlace=" + birthPlace + ", natioanality=" + natioanality + ", profileDescription=" + profileDescription + ", skills=" + skills + ", employmentHistorys=" + employmentHistorys + '}';
     }
+    
+    
     
     
     

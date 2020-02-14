@@ -5,9 +5,7 @@
  */
 package com.mycompany.main;
 
-import com.mycompany.dao.inter.CountryDaoInter;
 import com.mycompany.dao.inter.EmploymentHistoryDaoInter;
-import com.mycompany.dao.inter.SkillDaoInter;
 import java.util.List;
 
 /**
@@ -17,8 +15,8 @@ import java.util.List;
 public class Main {
     // bazani temsil eden klasslara model ve ya entity deyilir
     public static void main(String[] args) {
-        CountryDaoInter userDao = Context.instanceCountryDao();
-        List list = userDao.getAll();
+        EmploymentHistoryDaoInter  userDao= Context.instanceEmploymentHistoryDao();
+        List list = userDao.getAllEmploymentHistoryByUserId(1);
         System.out.println(list);
         
     }
