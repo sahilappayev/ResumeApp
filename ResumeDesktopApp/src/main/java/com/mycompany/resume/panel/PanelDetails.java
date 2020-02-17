@@ -43,7 +43,6 @@ public class PanelDetails extends javax.swing.JPanel {
         txtEmail.setText(config.getLoggedInUser().getEmail());
         txtPhone.setText(config.getLoggedInUser().getPhone());
         txtBirthdate.setText(config.getLoggedInUser().getBirthDate().toString());
-        System.out.println(config.getLoggedInUser().getBirthDate().toString());
         cbBirthplace.setSelectedItem(config.getLoggedInUser().getBirthPlace().getCountryName());
         cbNationality.setSelectedItem(config.getLoggedInUser().getNatioanality().getNationality());
     }
@@ -53,10 +52,8 @@ public class PanelDetails extends javax.swing.JPanel {
         String phone = txtPhone.getText();
         String email = txtEmail.getText();
         String adress = txtAdress.getText();
-        String birthDateStr = txtBirthdate.getText();
-        System.out.println("birthDateStr   "+birthDateStr);
+        String birthDateStr = txtBirthdate.getText();        
         Date birthDate = new Date(Date.valueOf(birthDateStr).getTime()); //milli second with long type ( 1 sec = 1000 mlsec)
-        System.out.println("birthDate  "+birthDate);
         int countryID = cbBirthplace.getSelectedIndex()+1;
         int nationalityID = cbNationality.getSelectedIndex()+1;
         Country birthPlace = countryDao.getById(countryID);

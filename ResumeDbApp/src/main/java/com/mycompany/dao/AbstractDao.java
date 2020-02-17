@@ -14,7 +14,7 @@ import java.sql.DriverManager;
  */
 public abstract class AbstractDao{
     public static Connection connect() throws Exception{
-        String url = "jdbc:mysql://localhost:3306/resume?serverTimezone=UTC";
+        String url = "jdbc:mysql://localhost:3306/resume?serverTimezone=Asia/Baku";
         String user = "root";
         String password = "12345";
         return DriverManager.getConnection(url, user, password);
