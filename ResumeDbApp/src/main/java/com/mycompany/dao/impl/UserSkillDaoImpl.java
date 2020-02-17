@@ -13,6 +13,7 @@ import com.mycompany.dao.inter.UserSkillDaoInter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,21 +21,45 @@ import java.util.List;
  *
  * @author SahilAppayev
  */
-public class UserSkillDaoImpl extends AbstractDao implements UserSkillDaoInter{
-    
+public class UserSkillDaoImpl extends AbstractDao implements UserSkillDaoInter {
+
     @Override
-    public boolean update(User u) {
-        return false;
+    public boolean update(UserSkill us) {
+        try (Connection connection = connect()) {
+            PreparedStatement statement = connection.prepareStatement("update skill set user_id = ?, skil_id = ?, level = ? where id =" + us.getId());
+            statement.setInt(1, us.getUser().getId());
+            statement.setInt(2, us.getSkill().getId());
+            statement.setInt(3, us.getLevel());
+            return statement.execute();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        try (Connection connection = connect()) {
+            Statement statement = connection.createStatement();
+            return statement.execute("delete from user_skill where id=" + id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
-    public boolean add(User u) {
+    public boolean add(UserSkill us) {
+        try (Connection connection = connect()) {
+            PreparedStatement statement = connection.prepareStatement("inster into skill (user_id, skil_id, level) values (?, ?, ?)");
+            statement.setInt(1, us.getUser().getId());
+            statement.setInt(2, us.getId());
+            statement.setInt(3, us.getLevel());
+            return statement.execute();
+        } catch (Exception ex) {
+            ex.printStackTrace();
             return false;
+        }
     }
 
     private UserSkill getUserSkill(ResultSet rs) throws Exception {
@@ -43,8 +68,8 @@ public class UserSkillDaoImpl extends AbstractDao implements UserSkillDaoInter{
         int skillId = rs.getInt("skill_id");
         int level = rs.getInt("level");
         String name = rs.getString("skill_name");
-        Skill skill = new Skill(skillId,name);
-        return new UserSkill(null,new User(userId), skill, level);
+        Skill skill = new Skill(skillId, name);
+        return new UserSkill(null, new User(userId), skill, level);
     }
 
     @Override

@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,18 +24,49 @@ import java.util.List;
 public class EmploymentHistoryDaoImpl extends AbstractDao implements EmploymentHistoryDaoInter {
 
     @Override
-    public boolean add(User u) {
-        return false;
+    public boolean add(EmploymentHistory e) {
+        try(Connection connection = connect()){
+            PreparedStatement statement = connection.prepareStatement("insert into employment_history (header, begin_date, end_date, job_description)"
+                    + " values (?,?,?,?) where user_id="+e.getUser().getId());
+            statement.setString(1,e.getHeader() );
+            statement.setDate(2,e.getBeginDate() );
+            statement.setDate(3,e.getEndDate() );
+            statement.setString(4, e.getJobDescription());
+            return statement.execute();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
-    public boolean update(User u) {
-        return false;
+    public boolean update(EmploymentHistory e) {
+         try(Connection connection = connect()){            
+            PreparedStatement statement = connection.prepareStatement("update employment_history set header =?,"
+                    + " begin_date =?,"
+                    + " end_date = ?,"
+                    + " job_description = ?"
+                    + "where user_id="+e.getUser().getId());
+            statement.setString(1,e.getHeader() );
+            statement.setDate(2,e.getBeginDate() );
+            statement.setDate(3,e.getEndDate() );
+            statement.setString(4, e.getJobDescription());
+            return statement.execute();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        try(Connection connection = connect()){
+        Statement statement = connection.createStatement();
+        return statement.execute("delete from employment_history where id="+id);
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     private EmploymentHistory getEmploymentHistory(ResultSet rs) throws Exception {

@@ -8,8 +8,8 @@ package com.mycompany.dao.impl;
 import com.mycompany.dao.AbstractDao;
 import com.mycompany.dao.inter.SkillDaoInter;
 import com.mycompany.entity.Skill;
-import com.mycompany.entity.User;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class SkillDaoImpl extends AbstractDao implements SkillDaoInter {
         Skill result = new Skill();
         try (Connection connection = connect()) {
             Statement statement = connection.createStatement();
-            statement.execute("select * from skill where id="+skillId);
+            statement.execute("select * from skill where id=" + skillId);
             ResultSet rs = statement.getResultSet();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -58,18 +58,38 @@ public class SkillDaoImpl extends AbstractDao implements SkillDaoInter {
     }
 
     @Override
-    public boolean add(User u) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean add(Skill s) {
+        try (Connection connection = connect()) {
+            PreparedStatement statement = connection.prepareStatement("inster into skill (name) values (?)");
+            statement.setString(1, s.getName());
+            return statement.execute();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
-    public boolean update(User u) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean update(Skill s) {
+         try (Connection connection = connect()) {
+            PreparedStatement statement = connection.prepareStatement("update skill setb name = ? where id="+s.getId());
+            statement.setString(1, s.getName());
+            return statement.execute();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection connection = connect()) {
+            Statement statement = connection.createStatement();
+            return statement.execute("delete from skill where id=" + id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }

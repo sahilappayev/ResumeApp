@@ -8,8 +8,8 @@ package com.mycompany.dao.impl;
 import com.mycompany.dao.AbstractDao;
 import com.mycompany.dao.inter.CountryDaoInter;
 import com.mycompany.entity.Country;
-import com.mycompany.entity.User;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class CountryDaoImpl extends AbstractDao implements CountryDaoInter {
         Country result = new Country();
         try (Connection connection = connect()) {
             Statement statement = connection.createStatement();
-            statement.execute("select * from country where id="+countryId);
+            statement.execute("select * from country where id=" + countryId);
             ResultSet rs = statement.getResultSet();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -60,18 +60,40 @@ public class CountryDaoImpl extends AbstractDao implements CountryDaoInter {
     }
 
     @Override
-    public boolean add(User u) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean add(Country c) {
+         try (Connection connection = connect()) {
+             PreparedStatement statement = connection.prepareStatement("inster into skill (country_name, nationality) values (?, ?)");
+            statement.setString(1, c.getCountryName());
+            statement.setString(2, c.getNationality());
+            return statement.execute();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
-    public boolean update(User u) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean update(Country c) {
+          try (Connection connection = connect()) {
+             PreparedStatement statement = connection.prepareStatement("update skill set country_name = ?, nationality = ? where id="+c.getId());
+            statement.setString(1, c.getCountryName());
+            statement.setString(2, c.getNationality());
+            return statement.execute();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection connection = connect()) {
+            Statement statement = connection.createStatement();
+            return statement.execute("delete from country where id=" + id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }

@@ -99,13 +99,28 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
         try (Connection connection = connect()) {
             //preventing sql injection
             //charecter encoding
-            PreparedStatement statement = connection.prepareStatement("update resume.user set name = ?, surname = ?, age = ?, phone = ?, email = ? where id = ?");
+            PreparedStatement statement = connection.prepareStatement("update resume.user set name = ?,"
+                    + " surname = ?,"
+                    + " age = ?,"
+                    + " phone = ?,"
+                    + " email = ?,"
+                    + " adress = ?,"
+                    + " profile_description = ?,"
+                    + "birthdate = ?,"
+                    + "birthplace_id = ?,"
+                    + "nationality_id = ?"
+                    + " where id = ?");
             statement.setString(1, u.getName());
             statement.setString(2, u.getSurname());
             statement.setInt(3, u.getAge());
             statement.setString(4, u.getPhone());
             statement.setString(5, u.getEmail());
-            statement.setInt(6, u.getId());
+            statement.setString(6, u.getAdress());
+            statement.setString(7, u.getProfileDescription());
+            statement.setDate(8, u.getBirthDate());
+            statement.setInt(9, u.getBirthPlace().getId());
+            statement.setInt(10, u.getNatioanality().getId());
+            statement.setInt(11, u.getId());
             return statement.execute();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -127,12 +142,19 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
     @Override
     public boolean add(User u) {
         try (Connection connection = connect()) {
-            PreparedStatement statement = connection.prepareStatement("insert into resume.user (name, surname, age, phone, email) values (?,?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("insert into resume.user (name, surname, age, phone, email, adress, profile_description, birthdate, birthplace_id, nationality_id)"
+                    + "valuse(?,?,?,?,?,?,?,?,?,?) where id = ?");
             statement.setString(1, u.getName());
             statement.setString(2, u.getSurname());
             statement.setInt(3, u.getAge());
             statement.setString(4, u.getPhone());
             statement.setString(5, u.getEmail());
+            statement.setString(6, u.getAdress());
+            statement.setString(7, u.getProfileDescription());
+            statement.setDate(8, u.getBirthDate());
+            statement.setInt(9, u.getBirthPlace().getId());
+            statement.setInt(10, u.getNatioanality().getId());
+            statement.setInt(11, u.getId());
             return statement.execute();
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -14,8 +14,8 @@ import java.util.List;
  * @author SahilAppayev
  */
 public interface UserSkillDaoInter {
-    public boolean add(User u);
-    public boolean update(User u);
+    public boolean add(UserSkill us);
+    public boolean update(UserSkill us);
     public boolean delete(int id);
     public List<UserSkill> getAllSkillByUserId(int userId);
 }
