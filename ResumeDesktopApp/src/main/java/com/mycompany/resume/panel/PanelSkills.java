@@ -65,18 +65,15 @@ public class PanelSkills extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSkills = new javax.swing.JTable();
 
-        cbSkills.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         lblSkill.setText("Skill");
 
         lblLevel.setText("Level");
 
         sldrLevel.setMaximum(10);
-        sldrLevel.setMinimum(1);
         sldrLevel.setPaintLabels(true);
         sldrLevel.setPaintTicks(true);
         sldrLevel.setToolTipText("");
-        sldrLevel.setValue(1);
+        sldrLevel.setValue(0);
 
         btnDelete.setText("Delete");
 

@@ -135,13 +135,13 @@ public class PanelDetails extends javax.swing.JPanel {
                 .addGap(50, 50, 50)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(txtBirthdate)
-                    .addComponent(cbNationality, 0, 83, Short.MAX_VALUE)
+                    .addComponent(cbNationality, 0, 222, Short.MAX_VALUE)
                     .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtAge, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtAdress, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtPhone, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(cbBirthplace, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(454, 454, 454))
+                .addGap(315, 315, 315))
         );
         pnlDetailsLayout.setVerticalGroup(
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
