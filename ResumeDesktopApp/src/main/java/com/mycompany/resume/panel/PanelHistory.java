@@ -10,6 +10,10 @@ import com.mycompany.dao.inter.EmploymentHistoryDaoInter;
 import com.mycompany.entity.EmploymentHistory;
 import com.mycompany.resume.config.Config;
 import java.sql.Date;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,18 +31,28 @@ public class PanelHistory extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void fillWindow() {
-        config.getLoggedInUser().setEmploymentHistorys(historyDao.getAllEmploymentHistoryByUserId(config.getLoggedInUser().getId())); //userin ichindeki emphist listine history listi set olunur
-        for (EmploymentHistory h : config.getLoggedInUser().getEmploymentHistorys()) { //actually it have to write with table
+    public void fillUser() {
+        int userID = config.getLoggedInUser().getId();
+        List<EmploymentHistory> historyList = historyDao.getAllEmploymentHistoryByUserId(userID);
+        config.getLoggedInUser().setEmploymentHistorys(historyList); //userin ichindeki emphist listine history listi set olunur
+        for (EmploymentHistory h : config.getLoggedInUser().getEmploymentHistorys()) {
             config.setUserHistory(h); //historyList`den butun historyler 1-1 chekilir
         }
     }
 
     public void fillUserComponents() {
-        fillWindow();
-        txtHeader.setText(config.getUserHistory().getHeader());
-        txtBeginDate.setText(config.getUserHistory().getBeginDate().toString());
-        txtEndDate.setText(config.getUserHistory().getEndDate().toString());
+        fillUser();
+        List<EmploymentHistory> historyList = config.getLoggedInUser().getEmploymentHistorys();
+        Vector<Vector> rows = new Vector<>();
+        for(EmploymentHistory h: historyList){
+            Vector<Object> row = new Vector<>();
+            row.add(h.getHeader());
+            row.add(h.getBeginDate());
+            row.add(h.getEndDate());
+            rows.add(row);
+        }
+        DefaultTableModel dtm = new DefaultTableModel(rows, new Vector<String>(Arrays.asList("Header", "Begin date", "End date")));
+        tblEmpHistory.setModel(dtm);
         txtAreaJobDesc.setText(config.getUserHistory().getJobDescription());
 
     }
@@ -68,28 +82,100 @@ public class PanelHistory extends javax.swing.JPanel {
     private void initComponents() {
 
         pnlHistory = new javax.swing.JPanel();
-        txtHeader = new javax.swing.JTextField();
-        lblHeader = new javax.swing.JLabel();
-        txtBeginDate = new javax.swing.JTextField();
-        lblBeginDate = new javax.swing.JLabel();
-        txtEndDate = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
         lblEndDate = new javax.swing.JLabel();
+        lblBeginDate = new javax.swing.JLabel();
+        lblHeader = new javax.swing.JLabel();
+        txtHeader = new javax.swing.JTextField();
+        txtBeginDate = new javax.swing.JTextField();
+        txtEndDate = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblEmpHistory = new javax.swing.JTable();
+        btnAdd = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        scrlPnlJobDesc = new javax.swing.JScrollPane();
         txtAreaJobDesc = new javax.swing.JTextArea();
-
-        txtHeader.setToolTipText("");
-
-        lblHeader.setText("Header");
-
-        txtBeginDate.setToolTipText("");
-
-        lblBeginDate.setText("Begin Date");
-
-        txtEndDate.setToolTipText("");
 
         lblEndDate.setText("End Date");
 
+        lblBeginDate.setText("Begin Date");
+
+        lblHeader.setText("Header");
+
+        txtHeader.setToolTipText("");
+
+        txtBeginDate.setToolTipText("");
+
+        txtEndDate.setToolTipText("");
+
+        tblEmpHistory.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ));
+        jScrollPane1.setViewportView(tblEmpHistory);
+
+        btnAdd.setText("Add");
+
+        btnDelete.setText("Delete");
+
+        btnUpdate.setText("Update");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                            .addComponent(btnAdd))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(btnDelete)
+                            .addComponent(txtBeginDate, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                            .addComponent(lblBeginDate, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(lblEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEndDate, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                            .addComponent(btnUpdate)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblHeader)
+                    .addComponent(lblBeginDate)
+                    .addComponent(lblEndDate))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBeginDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdd)
+                    .addComponent(btnDelete)
+                    .addComponent(btnUpdate))
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         txtAreaJobDesc.setColumns(20);
         txtAreaJobDesc.setRows(5);
+        scrlPnlJobDesc.setViewportView(txtAreaJobDesc);
 
         javax.swing.GroupLayout pnlHistoryLayout = new javax.swing.GroupLayout(pnlHistory);
         pnlHistory.setLayout(pnlHistoryLayout);
@@ -97,43 +183,18 @@ public class PanelHistory extends javax.swing.JPanel {
             pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHistoryLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlHistoryLayout.createSequentialGroup()
-                        .addComponent(lblEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlHistoryLayout.createSequentialGroup()
-                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlHistoryLayout.createSequentialGroup()
-                        .addComponent(lblBeginDate, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtBeginDate, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(txtAreaJobDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+                .addComponent(scrlPnlJobDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlHistoryLayout.setVerticalGroup(
             pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHistoryLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlHistoryLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblHeader)
-                            .addComponent(txtHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblBeginDate)
-                            .addComponent(txtBeginDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19)
-                        .addGroup(pnlHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblEndDate)
-                            .addComponent(txtEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlHistoryLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtAreaJobDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)))
+                    .addComponent(scrlPnlJobDesc)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -141,30 +202,33 @@ public class PanelHistory extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 730, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(pnlHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 364, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(pnlHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBeginDate;
     private javax.swing.JLabel lblEndDate;
     private javax.swing.JLabel lblHeader;
     private javax.swing.JPanel pnlHistory;
+    private javax.swing.JScrollPane scrlPnlJobDesc;
+    private javax.swing.JTable tblEmpHistory;
     private javax.swing.JTextArea txtAreaJobDesc;
     private javax.swing.JTextField txtBeginDate;
     private javax.swing.JTextField txtEndDate;

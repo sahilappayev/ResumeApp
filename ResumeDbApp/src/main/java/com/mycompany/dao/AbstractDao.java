@@ -13,7 +13,8 @@ import java.sql.DriverManager;
  * @author SahilAppayev
  */
 public abstract class AbstractDao{
-    public static Connection connect() throws Exception{
+    public static Connection connect() throws Exception{       
+        Class.forName("com.mysql.cj.jdbc.Driver");
         String url = "jdbc:mysql://localhost:3306/resume?serverTimezone=Asia/Baku";
         String user = "root";
         String password = "12345";

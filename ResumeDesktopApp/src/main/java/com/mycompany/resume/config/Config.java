@@ -18,7 +18,7 @@ import java.util.List;
 public class Config {
     private static Config config;
     private User loggedInUser;
-    private EmploymentHistory userHistory;
+    private EmploymentHistory employmentHistory;
     List<Country> countryList;
     List<Skill> skills;
 
@@ -51,11 +51,11 @@ public class Config {
     }
 
     public EmploymentHistory getUserHistory() {
-        return userHistory;
+        return employmentHistory;
     }
 
     public void setUserHistory(EmploymentHistory userHistory) {
-        this.userHistory = userHistory;
+        this.employmentHistory = userHistory;
     }
 
     public static Config creatConfig(){
