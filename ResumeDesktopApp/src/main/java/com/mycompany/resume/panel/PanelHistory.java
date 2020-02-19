@@ -33,10 +33,10 @@ public class PanelHistory extends javax.swing.JPanel {
 
     public void fillUser() {
         int userID = config.getLoggedInUser().getId();
-        List<EmploymentHistory> historyList = historyDao.getAllEmploymentHistoryByUserId(userID);
-        config.getLoggedInUser().setEmploymentHistorys(historyList); //userin ichindeki emphist listine history listi set olunur
+        List<EmploymentHistory> empList = historyDao.getAllEmploymentHistoryByUserId(userID);
+        config.getLoggedInUser().setEmploymentHistorys(empList); //userin ichindeki emphist listine history listi set olunur
         for (EmploymentHistory h : config.getLoggedInUser().getEmploymentHistorys()) {
-            config.setUserHistory(h); //historyList`den butun historyler 1-1 chekilir
+            config.setUserHistory(h); //historyList`den butun historyler 1-1 chekilir ve config`e set olunur
         }
     }
 
@@ -44,17 +44,25 @@ public class PanelHistory extends javax.swing.JPanel {
         fillUser();
         List<EmploymentHistory> historyList = config.getLoggedInUser().getEmploymentHistorys();
         Vector<Vector> rows = new Vector<>();
-        for(EmploymentHistory h: historyList){
+        for (EmploymentHistory h : historyList) {
             Vector<Object> row = new Vector<>();
             row.add(h.getHeader());
             row.add(h.getBeginDate());
             row.add(h.getEndDate());
             rows.add(row);
         }
-        DefaultTableModel dtm = new DefaultTableModel(rows, new Vector<String>(Arrays.asList("Header", "Begin date", "End date")));
+        Vector<String> columns = new Vector<String>(Arrays.asList("Header", "Begin date", "End date"));
+        DefaultTableModel dtm = new DefaultTableModel(rows, columns);
         tblEmpHistory.setModel(dtm);
-        txtAreaJobDesc.setText(config.getUserHistory().getJobDescription());
-
+        int index = tblEmpHistory.getSelectedRow();
+        System.out.println(index);
+        if (index >= 0) {
+            txtAreaJobDesc.setText(historyList.get(index).getJobDescription());
+        } else {
+            if (historyList.size() > 0) {
+                txtAreaJobDesc.setText(historyList.get(0).getJobDescription());
+            }
+        }
     }
 
     public void saveBtn() {
@@ -62,14 +70,20 @@ public class PanelHistory extends javax.swing.JPanel {
         String jobDesc = txtAreaJobDesc.getText();
         String beginDateStr = txtBeginDate.getText();
         String endDateStr = txtEndDate.getText();
-        Date beginDate = new Date(Date.valueOf(beginDateStr).getTime());
-        Date endDate = new Date(Date.valueOf(endDateStr).getTime());
-
-        config.getUserHistory().setHeader(header);
-        config.getUserHistory().setBeginDate(beginDate);
-        config.getUserHistory().setEndDate(endDate);
-        config.getUserHistory().setJobDescription(jobDesc);
-        historyDao.update(config.getUserHistory());
+        System.out.println("header  "+header);
+        System.out.println("jobDesc  "+jobDesc);
+        System.out.println("beginDateStr  "+beginDateStr);
+        System.out.println("endDateStr  "+endDateStr);
+        if (header != null && jobDesc != null && beginDateStr != null && endDateStr != null) {
+//            Date beginDate = new Date(Date.valueOf(beginDateStr).getTime());
+//            Date endDate = new Date(Date.valueOf(endDateStr).getTime());
+//
+//            config.getUserHistory().setHeader(header);
+//            config.getUserHistory().setBeginDate(beginDate);
+//            config.getUserHistory().setEndDate(endDate);
+//            config.getUserHistory().setJobDescription(jobDesc);
+//            historyDao.update(config.getUserHistory());
+        }
     }
 
     /**

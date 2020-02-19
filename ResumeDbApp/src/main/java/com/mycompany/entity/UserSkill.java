@@ -25,7 +25,7 @@ public class UserSkill {
         this.level = level;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

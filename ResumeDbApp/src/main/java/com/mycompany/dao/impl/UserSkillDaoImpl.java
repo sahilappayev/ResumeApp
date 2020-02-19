@@ -26,7 +26,7 @@ public class UserSkillDaoImpl extends AbstractDao implements UserSkillDaoInter {
     @Override
     public boolean update(UserSkill us) {
         try (Connection connection = connect()) {
-            PreparedStatement statement = connection.prepareStatement("update skill set user_id = ?, skil_id = ?, level = ? where id =" + us.getId());
+            PreparedStatement statement = connection.prepareStatement("update skill set user_id = ?, skill_id = ?, level = ? where id =" + us.getId());
             statement.setInt(1, us.getUser().getId());
             statement.setInt(2, us.getSkill().getId());
             statement.setInt(3, us.getLevel());
@@ -51,9 +51,9 @@ public class UserSkillDaoImpl extends AbstractDao implements UserSkillDaoInter {
     @Override
     public boolean add(UserSkill us) {
         try (Connection connection = connect()) {
-            PreparedStatement statement = connection.prepareStatement("inster into skill (user_id, skil_id, level) values (?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("insert into user_skill (user_id, skill_id, level) values (?, ?, ?)");
             statement.setInt(1, us.getUser().getId());
-            statement.setInt(2, us.getId());
+            statement.setInt(2, us.getSkill().getId());
             statement.setInt(3, us.getLevel());
             return statement.execute();
         } catch (Exception ex) {

@@ -11,6 +11,7 @@ import com.mycompany.entity.Skill;
 import com.mycompany.entity.UserSkill;
 import com.mycompany.main.Context;
 import com.mycompany.resume.config.Config;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
@@ -42,22 +43,16 @@ public class PanelSkills extends javax.swing.JPanel {
 
     public void fillUserComponents() {
         fillWindow();
-
-        Vector<String> columns = new Vector<>();
-        columns.add("Name");
-        columns.add("Level");
-        
         int userID = config.getLoggedInUser().getId();
         List<UserSkill> uSkills = userSkillDao.getAllSkillByUserId(userID);
         Vector<Vector> rows = new Vector<>();
-            for (UserSkill s : uSkills) {
-                Vector<Object> row = new Vector<>();
-                row.add(s.getSkill());
-                row.add(s.getLevel());
-                rows.add(row);
-            }
-            
-        DefaultTableModel dtm = new DefaultTableModel(rows, columns);
+        for (UserSkill s : uSkills) {
+            Vector<Object> row = new Vector<>();
+            row.add(s.getSkill());
+            row.add(s.getLevel());
+            rows.add(row);
+        }
+        DefaultTableModel dtm = new DefaultTableModel(rows, new Vector<String>(Arrays.asList("Skill", "Level")));
         tblSkills.setModel(dtm);
     }
 
@@ -98,6 +93,11 @@ public class PanelSkills extends javax.swing.JPanel {
         sldrLevel.setValue(0);
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnAdd.setText("Add");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -225,14 +225,25 @@ public class PanelSkills extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         String skillStr = txtSkill.getText();
-        UserSkill us = null;
-        if (skillStr != null) {
-            Skill skill = new Skill(0, skillStr);
-
+        if (skillStr != null && !skillStr.isEmpty()) {
+            //write code here
         } else {
-            us = (UserSkill) cbSkills.getSelectedItem();
+            Skill skill = (Skill) cbSkills.getSelectedItem();
+            System.out.println(skill+"  id  "+skill.getId());
+            int level = sldrLevel.getValue();
+            UserSkill us = new UserSkill(null, config.getLoggedInUser(), skill, level);
+            userSkillDao.add(us);
         }
+        fillUserComponents();
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        int index = tblSkills.getSelectedRow();
+        if (index >= 0) {
+            skillDao.delete(index);
+            fillWindow();
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
