@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -141,9 +142,10 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
 
     @Override
     public boolean add(User u) {
+        boolean b;
         try (Connection connection = connect()) {
             PreparedStatement statement = connection.prepareStatement("insert into resume.user (name, surname, age, phone, email, adress, profile_description, birthdate, birthplace_id, nationality_id)"
-                    + "valuse(?,?,?,?,?,?,?,?,?,?) where id = ?");
+                    + "valuse(?,?,?,?,?,?,?,?,?,?) where id = ?", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, u.getName());
             statement.setString(2, u.getSurname());
             statement.setInt(3, u.getAge());
@@ -155,10 +157,18 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
             statement.setInt(9, u.getBirthPlace().getId());
             statement.setInt(10, u.getNatioanality().getId());
             statement.setInt(11, u.getId());
-            return statement.execute();
+            b = statement.execute();
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    u.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Operation failed, no ID obtained!");
+                }
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         }
+        return b;
     }
 }

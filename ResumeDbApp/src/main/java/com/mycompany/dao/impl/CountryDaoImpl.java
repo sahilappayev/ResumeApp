@@ -11,6 +11,7 @@ import com.mycompany.entity.Country;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,21 +62,30 @@ public class CountryDaoImpl extends AbstractDao implements CountryDaoInter {
 
     @Override
     public boolean add(Country c) {
-         try (Connection connection = connect()) {
-             PreparedStatement statement = connection.prepareStatement("inster into skill (country_name, nationality) values (?, ?)");
+        boolean b;
+        try (Connection connection = connect()) {
+            PreparedStatement statement = connection.prepareStatement("insert into skill (country_name, nationality) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, c.getCountryName());
             statement.setString(2, c.getNationality());
-            return statement.execute();
+            b = statement.execute();
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    c.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Operation failed, no ID obtained!");
+                }
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         }
+        return b;
     }
 
     @Override
     public boolean update(Country c) {
-          try (Connection connection = connect()) {
-             PreparedStatement statement = connection.prepareStatement("update skill set country_name = ?, nationality = ? where id="+c.getId());
+        try (Connection connection = connect()) {
+            PreparedStatement statement = connection.prepareStatement("update skill set country_name = ?, nationality = ? where id=" + c.getId());
             statement.setString(1, c.getCountryName());
             statement.setString(2, c.getNationality());
             return statement.execute();

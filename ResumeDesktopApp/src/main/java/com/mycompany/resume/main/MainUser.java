@@ -14,7 +14,9 @@ import com.mycompany.resume.config.Config;
  * @author Admin
  */
 public class MainUser extends javax.swing.JFrame {
-    Config config = Config.creatConfig();;
+
+    Config config = Config.creatConfig();
+    ;
     public static UserDaoInter userDao = Context.instanceUserDao();
 
     /**
@@ -26,16 +28,15 @@ public class MainUser extends javax.swing.JFrame {
         fillUserComponents();
     }
 
-    private void fillUserComponents(){
+    private void fillUserComponents() {
         txtName.setText(config.getLoggedInUser().getName());
         txtSurname.setText(config.getLoggedInUser().getSurname());
         pnlProfile.fillUserComponents();
         pnlDetails.fillUserComponents();
         pnlSkills.fillUserComponents();
         pnlHistory.fillUserComponents();
-        
+
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +53,7 @@ public class MainUser extends javax.swing.JFrame {
         txtSurname = new javax.swing.JTextField();
         lblSurname = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         tpUser = new javax.swing.JTabbedPane();
         pnlProfile = new com.mycompany.resume.panel.PanelProfile();
@@ -74,6 +76,13 @@ public class MainUser extends javax.swing.JFrame {
             }
         });
 
+        btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlUserLayout = new javax.swing.GroupLayout(pnlUser);
         pnlUser.setLayout(pnlUserLayout);
         pnlUserLayout.setHorizontalGroup(
@@ -89,8 +98,10 @@ public class MainUser extends javax.swing.JFrame {
                         .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(35, 35, 35)
-                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addGroup(pnlUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                    .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(17, 17, 17))
         );
         pnlUserLayout.setVerticalGroup(
@@ -99,12 +110,13 @@ public class MainUser extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblName))
-                .addGap(6, 6, 6)
+                    .addComponent(lblName)
+                    .addComponent(btnSave))
+                .addGap(2, 2, 2)
                 .addGroup(pnlUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnSave)
                     .addComponent(txtSurname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSurname))
+                    .addComponent(lblSurname)
+                    .addComponent(btnRefresh))
                 .addContainerGap())
         );
 
@@ -135,7 +147,7 @@ public class MainUser extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tpUser)
+                .addComponent(tpUser, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -151,6 +163,10 @@ public class MainUser extends javax.swing.JFrame {
         pnlHistory.saveBtn();
         userDao.update(config.getLoggedInUser());
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        
+    }//GEN-LAST:event_btnRefreshActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,6 +205,7 @@ public class MainUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSave;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblName;

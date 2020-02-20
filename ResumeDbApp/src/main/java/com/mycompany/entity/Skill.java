@@ -10,18 +10,19 @@ package com.mycompany.entity;
  * @author SahilAppayev
  */
 public class Skill {
-    private int id;
+
+    private Integer id;
     private String name;
 
     public Skill() {
     }
 
-    public Skill(int id, String name) {
+    public Skill(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -41,6 +42,5 @@ public class Skill {
     public String toString() {
         return name;
     }
-    
-    
+
 }

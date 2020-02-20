@@ -55,7 +55,6 @@ public class PanelHistory extends javax.swing.JPanel {
         DefaultTableModel dtm = new DefaultTableModel(rows, columns);
         tblEmpHistory.setModel(dtm);
         int index = tblEmpHistory.getSelectedRow();
-        System.out.println(index);
         if (index >= 0) {
             txtAreaJobDesc.setText(historyList.get(index).getJobDescription());
         } else {

@@ -11,6 +11,7 @@ import com.mycompany.entity.Skill;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,20 +60,29 @@ public class SkillDaoImpl extends AbstractDao implements SkillDaoInter {
 
     @Override
     public boolean add(Skill s) {
+        boolean b;
         try (Connection connection = connect()) {
-            PreparedStatement statement = connection.prepareStatement("inster into skill (name) values (?)");
+            PreparedStatement statement = connection.prepareStatement("insert into skill (name) values (?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, s.getName());
-            return statement.execute();
+            b = statement.execute();
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    s.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Operation failed, no ID obtained!");
+                }
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         }
+        return b;
     }
 
     @Override
     public boolean update(Skill s) {
-         try (Connection connection = connect()) {
-            PreparedStatement statement = connection.prepareStatement("update skill setb name = ? where id="+s.getId());
+        try (Connection connection = connect()) {
+            PreparedStatement statement = connection.prepareStatement("update skill setb name = ? where id=" + s.getId());
             statement.setString(1, s.getName());
             return statement.execute();
         } catch (Exception ex) {

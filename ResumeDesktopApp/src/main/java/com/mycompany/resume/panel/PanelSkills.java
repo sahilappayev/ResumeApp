@@ -45,6 +45,7 @@ public class PanelSkills extends javax.swing.JPanel {
         fillWindow();
         int userID = config.getLoggedInUser().getId();
         List<UserSkill> uSkills = userSkillDao.getAllSkillByUserId(userID);
+        config.getLoggedInUser().setSkills(uSkills);
         Vector<Vector> rows = new Vector<>();
         for (UserSkill s : uSkills) {
             Vector<Object> row = new Vector<>();
@@ -78,6 +79,7 @@ public class PanelSkills extends javax.swing.JPanel {
         txtSkill = new javax.swing.JTextField();
         btnDelete = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
         pnlSkillTable = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSkills = new javax.swing.JTable();
@@ -106,6 +108,13 @@ public class PanelSkills extends javax.swing.JPanel {
             }
         });
 
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlSkillsControlLayout = new javax.swing.GroupLayout(pnlSkillsControl);
         pnlSkillsControl.setLayout(pnlSkillsControlLayout);
         pnlSkillsControlLayout.setHorizontalGroup(
@@ -116,23 +125,22 @@ public class PanelSkills extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSkillsControlLayout.createSequentialGroup()
                         .addComponent(lblLevel)
                         .addGap(18, 18, 18)
-                        .addComponent(sldrLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(sldrLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1))
                     .addGroup(pnlSkillsControlLayout.createSequentialGroup()
-                        .addGroup(pnlSkillsControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlSkillsControlLayout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(42, 42, 42)
-                                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlSkillsControlLayout.createSequentialGroup()
-                                .addComponent(lblSkill, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbSkills, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlSkillsControlLayout.createSequentialGroup()
-                                .addGap(161, 161, 161)
-                                .addComponent(txtSkill, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(6, 6, 6)))
-                .addGap(9, 9, 9))
+                        .addComponent(lblSkill, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbSkills, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlSkillsControlLayout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(txtSkill, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlSkillsControlLayout.createSequentialGroup()
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnUpdate)))
+                .addGap(8, 8, 8))
         );
         pnlSkillsControlLayout.setVerticalGroup(
             pnlSkillsControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,9 +156,10 @@ public class PanelSkills extends javax.swing.JPanel {
                         .addComponent(lblLevel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(11, 11, 11))
                     .addComponent(sldrLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(pnlSkillsControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlSkillsControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnUpdate))
                 .addContainerGap())
         );
 
@@ -171,7 +180,7 @@ public class PanelSkills extends javax.swing.JPanel {
             pnlSkillTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSkillTableLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlSkillTableLayout.setVerticalGroup(
@@ -224,31 +233,57 @@ public class PanelSkills extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        String skillStr = txtSkill.getText();
-        if (skillStr != null && !skillStr.isEmpty()) {
-            //write code here
+        String skillName = txtSkill.getText();
+        Skill skill = null;
+        if (skillName != null && !skillName.isEmpty()) {
+            skill = new Skill(null, skillName);
+            skillDao.add(skill);
         } else {
-            Skill skill = (Skill) cbSkills.getSelectedItem();
-            System.out.println(skill+"  id  "+skill.getId());
-            int level = sldrLevel.getValue();
-            UserSkill us = new UserSkill(null, config.getLoggedInUser(), skill, level);
-            userSkillDao.add(us);
+            skill = (Skill) cbSkills.getSelectedItem();
         }
+        int level = sldrLevel.getValue();
+        UserSkill us = new UserSkill(null, config.getLoggedInUser(), skill, level);
+        userSkillDao.add(us);
         fillUserComponents();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         int index = tblSkills.getSelectedRow();
         if (index >= 0) {
-            skillDao.delete(index);
-            fillWindow();
+            List<UserSkill> userSkills = config.getLoggedInUser().getSkills();
+            int userSkillId = userSkills.get(index).getSkill().getId();
+            userSkillDao.delete(userSkillId);
         }
+        fillUserComponents();
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        int index = tblSkills.getSelectedRow();
+        int level = sldrLevel.getValue();
+        String skillName = txtSkill.getText();
+        Skill skill = null;
+
+        if (index >= 0) {
+            if (skillName != null && !skillName.isEmpty()) {
+                skill = new Skill(null, skillName);
+                skillDao.add(skill);
+            } else {
+                skill = (Skill) cbSkills.getSelectedItem();
+            }
+            List<UserSkill> userSkills = config.getLoggedInUser().getSkills();
+            UserSkill userSkill = userSkills.get(index);
+            userSkill.setLevel(level);
+            userSkill.setSkill(skill);
+            userSkillDao.update(userSkill);
+            fillUserComponents();
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<Skill> cbSkills;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblLevel;
