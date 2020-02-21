@@ -15,6 +15,6 @@ import java.util.List;
 public interface EmploymentHistoryDaoInter {
     public boolean add(EmploymentHistory e);
     public boolean update(EmploymentHistory e);
-    public boolean delete(int id);
+    public boolean delete(EmploymentHistory e);
     public List<EmploymentHistory> getAllEmploymentHistoryByUserId(int userId);
 }

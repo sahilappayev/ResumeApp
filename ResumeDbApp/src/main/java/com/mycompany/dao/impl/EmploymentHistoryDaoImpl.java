@@ -28,12 +28,13 @@ public class EmploymentHistoryDaoImpl extends AbstractDao implements EmploymentH
     public boolean add(EmploymentHistory e) {
         boolean b;
         try (Connection connection = connect()) {
-            PreparedStatement statement = connection.prepareStatement("insert into employment_history (header, begin_date, end_date, job_description)"
-                    + " values (?,?,?,?) where user_id=" + e.getUser().getId(), Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement("insert into employment_history (header, begin_date, end_date, job_description, user_id)"
+                    + " values (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, e.getHeader());
             statement.setDate(2, e.getBeginDate());
             statement.setDate(3, e.getEndDate());
             statement.setString(4, e.getJobDescription());
+            statement.setInt(5, e.getUser().getId());
             b = statement.execute();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -56,7 +57,7 @@ public class EmploymentHistoryDaoImpl extends AbstractDao implements EmploymentH
                     + " begin_date =?,"
                     + " end_date = ?,"
                     + " job_description = ?"
-                    + "where user_id=" + e.getUser().getId());
+                    + "where id=" + e.getId());
             statement.setString(1, e.getHeader());
             statement.setDate(2, e.getBeginDate());
             statement.setDate(3, e.getEndDate());
@@ -69,10 +70,10 @@ public class EmploymentHistoryDaoImpl extends AbstractDao implements EmploymentH
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(EmploymentHistory e) {
         try (Connection connection = connect()) {
             Statement statement = connection.createStatement();
-            return statement.execute("delete from employment_history where id=" + id);
+            return statement.execute("delete from employment_history where id=" + e.getId());
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;

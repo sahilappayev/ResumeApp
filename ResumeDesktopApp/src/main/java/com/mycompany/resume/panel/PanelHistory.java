@@ -8,6 +8,7 @@ package com.mycompany.resume.panel;
 import com.mycompany.dao.impl.EmploymentHistoryDaoImpl;
 import com.mycompany.dao.inter.EmploymentHistoryDaoInter;
 import com.mycompany.entity.EmploymentHistory;
+import com.mycompany.main.Context;
 import com.mycompany.resume.config.Config;
 import java.sql.Date;
 import java.util.Arrays;
@@ -22,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 public class PanelHistory extends javax.swing.JPanel {
 
     Config config = Config.creatConfig();
-    EmploymentHistoryDaoInter historyDao = new EmploymentHistoryDaoImpl();
+    EmploymentHistoryDaoInter historyDao = Context.instanceEmploymentHistoryDao();
 
     /**
      * Creates new form HistoryPanel
@@ -65,24 +66,7 @@ public class PanelHistory extends javax.swing.JPanel {
     }
 
     public void saveBtn() {
-        String header = txtHeader.getText();
-        String jobDesc = txtAreaJobDesc.getText();
-        String beginDateStr = txtBeginDate.getText();
-        String endDateStr = txtEndDate.getText();
-        System.out.println("header  "+header);
-        System.out.println("jobDesc  "+jobDesc);
-        System.out.println("beginDateStr  "+beginDateStr);
-        System.out.println("endDateStr  "+endDateStr);
-        if (header != null && jobDesc != null && beginDateStr != null && endDateStr != null) {
-//            Date beginDate = new Date(Date.valueOf(beginDateStr).getTime());
-//            Date endDate = new Date(Date.valueOf(endDateStr).getTime());
-//
-//            config.getUserHistory().setHeader(header);
-//            config.getUserHistory().setBeginDate(beginDate);
-//            config.getUserHistory().setEndDate(endDate);
-//            config.getUserHistory().setJobDescription(jobDesc);
-//            historyDao.update(config.getUserHistory());
-        }
+
     }
 
     /**
@@ -130,13 +114,33 @@ public class PanelHistory extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3"
             }
         ));
+        tblEmpHistory.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblEmpHistoryKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblEmpHistory);
 
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -228,6 +232,51 @@ public class PanelHistory extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        String header = txtHeader.getText();
+        String beginDateString = txtBeginDate.getText();
+        String endDateStr = txtEndDate.getText();
+        Date beginDate = null;
+        Date endDate = null;
+        if (beginDateString != null && !beginDateString.isEmpty()) {
+            beginDate = Date.valueOf(beginDateString);
+        }
+        if (endDateStr != null && !endDateStr.isEmpty()) {
+            endDate = Date.valueOf(endDateStr);
+        }
+        String jobDesc = txtAreaJobDesc.getText();
+
+        if (header != null && !header.isEmpty() && beginDate != null && jobDesc != null && !jobDesc.isEmpty()) {
+            historyDao.add(new EmploymentHistory(null, header, beginDate, endDate, jobDesc, config.getLoggedInUser()));
+        }
+        fillUserComponents();
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        int index = tblEmpHistory.getSelectedRow();
+        if (index >= 0) {
+            EmploymentHistory emp = config.getLoggedInUser().getEmploymentHistorys().get(index);
+            historyDao.delete(emp);
+        }
+        fillUserComponents();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        int index = tblEmpHistory.getSelectedRow();
+        if (index >= 0) {
+            EmploymentHistory emp = config.getLoggedInUser().getEmploymentHistorys().get(index);
+            historyDao.update(emp);
+        }
+        fillUserComponents();
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void tblEmpHistoryKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblEmpHistoryKeyPressed
+        List<EmploymentHistory> historyList = config.getLoggedInUser().getEmploymentHistorys();
+        int index = tblEmpHistory.getSelectedRow();
+        txtAreaJobDesc.setText(historyList.get(index).getJobDescription());
+        fillUserComponents();
+    }//GEN-LAST:event_tblEmpHistoryKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
