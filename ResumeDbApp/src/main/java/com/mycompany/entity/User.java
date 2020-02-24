@@ -13,7 +13,7 @@ import java.util.List;
  * @author SahilAppayev
  */
 public class User {
-    private int id;
+    private Integer id;
     private String name;
     private String surname;
     private int age;
@@ -34,7 +34,7 @@ public class User {
         this.id = id;
     }
 
-    public User(int id, String name, String surname, int age, String phone, String email, String adress, Date birthDate, Country birthPlace, Country natioanality, String profileDescription, List<UserSkill> skills, List<EmploymentHistory> employmentHistorys) {
+    public User(Integer id, String name, String surname, int age, String phone, String email, String adress, Date birthDate, Country birthPlace, Country natioanality, String profileDescription, List<UserSkill> skills, List<EmploymentHistory> employmentHistorys) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -52,7 +52,7 @@ public class User {
     
     
     
-    public User(int id, String name, String surname, int age, String phone, String email, String adress, Date birthdate, Country birthplace, Country natioanality, String prifileDescription) {
+    public User(Integer id, String name, String surname, int age, String phone, String email, String adress, Date birthdate, Country birthplace, Country natioanality, String prifileDescription) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -66,7 +66,7 @@ public class User {
         this.adress = adress;
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
