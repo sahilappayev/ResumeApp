@@ -6,6 +6,9 @@
 package com.mycompany.main;
 
 import com.mycompany.dao.inter.EmploymentHistoryDaoInter;
+import com.mycompany.dao.inter.UserDaoInter;
+import com.mycompany.entity.User;
+
 import java.util.List;
 
 /**
@@ -15,9 +18,10 @@ import java.util.List;
 public class Main {
     // bazani temsil eden klasslara model ve ya entity deyilir
     public static void main(String[] args) {
-        EmploymentHistoryDaoInter  userDao= Context.instanceEmploymentHistoryDao();
-        List list = userDao.getAllEmploymentHistoryByUserId(1);
-        System.out.println(list);
-        
+        UserDaoInter userDao = Context.instanceUserDao();
+        List<User> users = userDao.getAll(null, null, null);
+        for(User u: users) {
+            System.out.println(u.getName());
+        }
     }
 }

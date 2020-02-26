@@ -11,6 +11,7 @@ import com.mycompany.entity.User;
 import com.mycompany.entity.UserSkill;
 import com.mycompany.dao.AbstractDao;
 import com.mycompany.dao.inter.UserDaoInter;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -21,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author SahilAppayev
  */
 public class UserDaoImpl extends AbstractDao implements UserDaoInter {
@@ -48,7 +48,7 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
     }
 
     @Override
-    public List<User> getAll(String name, String surname, int age) {
+    public List<User> getAll(String name, String surname, Integer age) {
         List<User> result = new ArrayList<>();
         try (Connection connection = connect()) {
 
@@ -61,32 +61,32 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
                     + "	LEFT JOIN country c ON u.birthplace_id = c.id"
                     + "	LEFT JOIN country n ON u.nationality_id = n.id where 1=1 ";
 
-            if(name !=null && !name.isEmpty()){
-                sql+="and u.name =?";
+            if (name != null && !name.isEmpty()) {
+                sql += "and u.name =?";
             }
-            if(surname !=null && !surname.isEmpty()){
-                sql+="and u.surname =?";
+            if (surname != null && !surname.isEmpty()) {
+                sql += "and u.surname =?";
             }
-            if(age != 0 && !name.isEmpty()){
-                sql+="and u.age =?";
+            if (age != null && !name.isEmpty()) {
+                sql += "and u.age =?";
             }
 
             PreparedStatement statement = connection.prepareStatement(sql);
 
             int i = 0;
-            if(name !=null && !name.isEmpty()){
+            if (name != null && !name.isEmpty()) {
                 i++;
-                statement.setString(i,name);
+                statement.setString(i, name);
             }
-            if(surname !=null && !surname.isEmpty()){
+            if (surname != null && !surname.isEmpty()) {
                 i++;
-                statement.setString(i,name);
+                statement.setString(i, name);
             }
-            if(age != 0 && !name.isEmpty()){
+            if (age != null && !name.isEmpty()) {
                 i++;
                 statement.setInt(i, age);
             }
-
+            statement.execute();
             ResultSet rs = statement.getResultSet();
             while (rs.next()) {
                 User user = getUser(rs);
