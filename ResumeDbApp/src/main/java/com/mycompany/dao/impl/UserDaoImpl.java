@@ -48,18 +48,45 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> getAll(String name, String surname, int age) {
         List<User> result = new ArrayList<>();
         try (Connection connection = connect()) {
-            Statement statement = connection.createStatement();
-            statement.execute("SELECT\n"
-                    + "	u.*,\n"
-                    + "	c.country_name birthplace,\n"
-                    + "	n.nationality \n"
-                    + "FROM\n"
-                    + "	USER u\n"
-                    + "	LEFT JOIN country c ON u.birthplace_id = c.id\n"
-                    + "	LEFT JOIN country n ON u.nationality_id = n.id");
+
+            String sql = "SELECT"
+                    + "	u.*,"
+                    + "	c.country_name birthplace,"
+                    + "	n.nationality "
+                    + "FROM"
+                    + "	USER u"
+                    + "	LEFT JOIN country c ON u.birthplace_id = c.id"
+                    + "	LEFT JOIN country n ON u.nationality_id = n.id where 1=1 ";
+
+            if(name !=null && !name.isEmpty()){
+                sql+="and u.name =?";
+            }
+            if(surname !=null && !surname.isEmpty()){
+                sql+="and u.surname =?";
+            }
+            if(age != 0 && !name.isEmpty()){
+                sql+="and u.age =?";
+            }
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            int i = 0;
+            if(name !=null && !name.isEmpty()){
+                i++;
+                statement.setString(i,name);
+            }
+            if(surname !=null && !surname.isEmpty()){
+                i++;
+                statement.setString(i,name);
+            }
+            if(age != 0 && !name.isEmpty()){
+                i++;
+                statement.setInt(i, age);
+            }
+
             ResultSet rs = statement.getResultSet();
             while (rs.next()) {
                 User user = getUser(rs);

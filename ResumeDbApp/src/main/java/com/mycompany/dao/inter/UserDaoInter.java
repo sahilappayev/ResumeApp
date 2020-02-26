@@ -15,7 +15,7 @@ import java.util.List;
  * @author SahilAppayev
  */
 public interface UserDaoInter{
-    public List<User> getAll();
+    public List<User> getAll(String name, String surname, int age);
     public User getById(int id);
     public boolean add(User u);
     public boolean update(User u);
