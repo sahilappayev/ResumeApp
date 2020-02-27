@@ -19,9 +19,9 @@ public class Main {
     // bazani temsil eden klasslara model ve ya entity deyilir
     public static void main(String[] args) {
         UserDaoInter userDao = Context.instanceUserDao();
-        List<User> users = userDao.getAll(null, null, null);
+        List<User> users = userDao.getAll("", "Appayev", null);
         for(User u: users) {
-            System.out.println(u.getName());
+            System.out.println(u);
         }
     }
 }

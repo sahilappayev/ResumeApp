@@ -61,31 +61,39 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
                     + "	LEFT JOIN country c ON u.birthplace_id = c.id"
                     + "	LEFT JOIN country n ON u.nationality_id = n.id where 1=1 ";
 
-            if (name != null && !name.isEmpty()) {
+            if (name != null && !name.trim().isEmpty()) {
                 sql += "and u.name =?";
             }
-            if (surname != null && !surname.isEmpty()) {
+            if (surname != null && !surname.trim().isEmpty()) {
                 sql += "and u.surname =?";
             }
-            if (age != null && !name.isEmpty()) {
+            if (age != null) {
                 sql += "and u.age =?";
             }
+
+
 
             PreparedStatement statement = connection.prepareStatement(sql);
 
             int i = 0;
-            if (name != null && !name.isEmpty()) {
+
+            if (name != null && !name.trim().isEmpty()) {
+//                System.out.println("Logged name");
                 i++;
                 statement.setString(i, name);
             }
-            if (surname != null && !surname.isEmpty()) {
+            if (surname != null && !surname.trim().isEmpty()) {
+//                System.out.println("Logged surname");
                 i++;
-                statement.setString(i, name);
+                statement.setString(i, surname);
             }
-            if (age != null && !name.isEmpty()) {
+            if (age != null) {
+//                System.out.println("Logged age");
                 i++;
                 statement.setInt(i, age);
             }
+//            System.out.println(sql);
+//            System.out.println("Name: "+name+"  Surname: "+surname+"  Age: "+age+"  i: "+i );
             statement.execute();
             ResultSet rs = statement.getResultSet();
             while (rs.next()) {
