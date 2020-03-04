@@ -2,10 +2,19 @@ div{
     margin: 15px;
 }
 
-.my_form{
-    margin: 0 auto;
-}
 
 .login_form{
     margin: 100px auto;
+}
+
+.container_2{
+    margin-top: 50px;
+}
+
+.my_container div{
+    margin: 15px auto;
+    margin-top: 25px;
+    padding: 20px;
+    background-color: gainsboro;
+    border-radius: 10px;
 }
