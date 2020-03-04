@@ -13,7 +13,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>JSP Page</title>
+    <title>All Users</title>
     <link rel="stylesheet" href="assets/css/users.css"/>
     <script src="https://kit.fontawesome.com/6770b2fa5e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -33,18 +33,20 @@
     List<User> users = userDao.getAll(name, surname, age);
 
 %>
-<div class="container">
-    <div class="form-group col-6 my_form">
+<div class="container my_container">
+    <div>
         <form action="users.jsp" method="POST">
-            <div>
-                <label name="name">Name:</label>
-                <input type="text" name="name" value="" placeholder="Enter name" class="form-control"/>
+            <div class="form-group col-6">
+                <div>
+                    <label name="name">Name:</label>
+                    <input type="text" name="name" value="" placeholder="Enter name" class="form-control"/>
+                </div>
+                <div>
+                    <label name="surname">Surname:</label>
+                    <input type="text" name="surname" value="" placeholder="Enter surname" class="form-control"/>
+                </div>
+                <input type="submit" name="search" value="Search" class="btn btn-primary"/>
             </div>
-            <div>
-                <label name="surname">Surname:</label>
-                <input type="text" name="surname" value="" placeholder="Enter surname" class="form-control"/>
-            </div>
-            <input type="submit" name="search" value="Search" class="btn btn-primary"/>
         </form>
     </div>
     <div>
