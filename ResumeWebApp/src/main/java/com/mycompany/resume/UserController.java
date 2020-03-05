@@ -39,7 +39,6 @@ public class UserController extends HttpServlet {
             if (u == null) {
                 throw new IllegalArgumentException("There is no user with this id!");
             }
-
             request.setAttribute("User", u);
             request.getRequestDispatcher("userdetail.jsp").forward(request,response);
         }catch (Exception ex){
