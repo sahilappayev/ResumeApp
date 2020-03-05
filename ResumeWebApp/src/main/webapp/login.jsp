@@ -9,24 +9,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
-<body class="div">
+<body class="login_bg">
 <%
-    UserDaoInter userDao = Context.instanceUserDao();
-    User user = userDao.getById(1);
 
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
 
 %>
-<div class="container col-4 login_form" >
-    <form action="users.jsp" method="post">
+<div class="container my_container col-4 login_form" >
+    <form action="login" method="get">
         <div class="form-group">
             <label>Username:</label>
             <input type="text" name="username" placeholder="Enter username" class="form-control" />
         </div>
         <div class="form-group ">
             <label>Password:</label>
-            <input type="text" name="password" placeholder="Enter password" class="form-control" />
+            <input type="password" name="password" placeholder="Enter password" class="form-control" />
         </div>
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">

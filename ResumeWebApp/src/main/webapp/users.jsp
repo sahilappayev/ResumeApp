@@ -15,15 +15,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>All Users</title>
 
-    <link rel="stylesheet" href="assets/css/background.css">
     <link rel="stylesheet" href="assets/css/users.css"/>
     <script src="https://kit.fontawesome.com/6770b2fa5e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
-<body>
-
-
+<body class="users_bg">
 
 <%
     List<User> users = (List<User>) request.getAttribute("users");

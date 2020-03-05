@@ -1,6 +1,26 @@
+.users_bg{
+    background-image: url("../images/ai_background.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.user_dt_bg{
+    background-image: url("../images/background.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.login_bg{
+    background-image: url("../images/machinelearning.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 .login_form{
     margin: 100px auto;
 }
+
+
 
 .container_2{
     margin-top: 50px;
@@ -11,7 +31,7 @@ div{
 }
 
 .my_container {
-    margin: 100px auto;
+    margin: 60px auto;
     padding: 30px;
     background-color: gainsboro;
     border-radius: 10px;
