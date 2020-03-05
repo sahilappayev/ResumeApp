@@ -6,9 +6,7 @@
 package com.mycompany.dao.impl;
 
 import com.mycompany.entity.Country;
-import com.mycompany.entity.Skill;
 import com.mycompany.entity.User;
-import com.mycompany.entity.UserSkill;
 import com.mycompany.dao.AbstractDao;
 import com.mycompany.dao.inter.UserDaoInter;
 
@@ -167,7 +165,7 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
     @Override
     public boolean delete(int id) {
         try (Connection connection = connect()) {
-            PreparedStatement statement = (PreparedStatement) connection.createStatement();
+            Statement statement = connection.createStatement();
             return statement.execute("delete from resume.user where id =" + id);
         } catch (Exception ex) {
             ex.printStackTrace();

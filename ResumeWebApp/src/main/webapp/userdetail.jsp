@@ -14,6 +14,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>User Details</title>
+    <link rel="stylesheet" href="assets/css/userdetail.css">
     <link rel="stylesheet" href="assets/css/users.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -27,7 +28,7 @@
 
 
 <div class="container my_container">
-    <form action="UserController" method="POST">
+    <form action="userdetail" method="POST">
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label> Name:</label>

@@ -10,24 +10,24 @@ package com.mycompany.entity;
  * @author SahilAppayev
  */
 public class Country {
-    private int id;
+    private Integer id;
     private String countryName;
     private String nationality;
 
     public Country() {
     }
 
-    public Country(int id, String countryName, String nationality) {
+    public Country(Integer id, String countryName, String nationality) {
         this.id = id;
         this.countryName = countryName;
         this.nationality = nationality;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

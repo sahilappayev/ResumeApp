@@ -14,28 +14,24 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>All Users</title>
+
+    <link rel="stylesheet" href="assets/css/background.css">
     <link rel="stylesheet" href="assets/css/users.css"/>
     <script src="https://kit.fontawesome.com/6770b2fa5e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
-<body class="div">
+<body>
+
+
+
 <%
-    UserDaoInter userDao = Context.instanceUserDao();
-
-    String name = request.getParameter("name");
-    String surname = request.getParameter("surname");
-    String ageStr = request.getParameter("age");
-    Integer age = null;
-    if (ageStr != null) {
-        age = Integer.parseInt(ageStr);
-    }
-    List<User> users = userDao.getAll(name, surname, age);
-
+    List<User> users = (List<User>) request.getAttribute("users");
 %>
+
 <div class="container my_container">
     <div>
-        <form action="users.jsp" method="POST">
+        <form action="users" method="get">
             <div class="form-group col-6">
                 <div>
                     <label name="name">Name:</label>
@@ -49,6 +45,7 @@
             </div>
         </form>
     </div>
+    <br>
     <div>
         <form>
             <table class="table">
@@ -57,6 +54,7 @@
                     <th>Name</th>
                     <th>Surname</th>
                     <th>Age</th>
+                    <th></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -71,11 +69,21 @@
                     </td>
                     <td><%=u.getAge()%>
                     </td>
-                    <td>
-                        <button type="submit" name="delet" value="Delete" class="btn btn-danger"><i
-                                class="fas fa-trash-alt"></i></button>
-                        <button type="submit" name="edit" value="Edit" class="btn btn-secondary"><i
-                                class="fas fa-user-edit"></i></button>
+                    <td style="width: 5px">
+                        <form action="userdetail" method="post">
+                            <input type="hidden" name="id" value="<%=u.getId()%>">
+                            <input type="hidden" name="action" value="delete">
+                            <button type="submit" value="Delete" class="btn btn-danger"><i
+                                    class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                    <td style="width: 5px">
+                        <form action="userdetail" method="get">
+                            <input type="hidden" name="id" value="<%=u.getId()%>">
+                            <input type="hidden" name="action" value="update">
+                            <button type="submit" value="Edit" class="btn btn-secondary"><i
+                                    class="fas fa-user-edit"></i></button>
+                        </form>
                     </td>
                 </tr>
                 <%}%>
