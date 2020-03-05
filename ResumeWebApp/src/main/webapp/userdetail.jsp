@@ -5,9 +5,6 @@
 --%>
 
 <%@page import="com.mycompany.entity.User" %>
-<%@page import="com.mycompany.main.Context" %>
-<%@page import="com.mycompany.dao.inter.UserDaoInter" %>
-<%@ page import="com.mycompany.resume.UserRequestUtil" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -75,6 +72,7 @@
             </div>
 
             <div>
+                <input type="hidden" name="action" value="update">
                 <input type="submit" name="save" value="Save" class="btn btn-primary"/>
             </div>
         </div>
