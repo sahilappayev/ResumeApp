@@ -20,9 +20,15 @@
     <script src="https://kit.fontawesome.com/6770b2fa5e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
 </head>
 <body class="users_bg">
 
@@ -33,10 +39,10 @@
 %>
 
 <div class="container my_container">
-<%-- Logged in User--%>
+    <%-- Logged in User--%>
     <center><h1 style="color: blue"> Welcome <%=user.getName()%>!</h1></center>
 
-<%--Search are--%>
+    <%--Search are--%>
     <div>
         <form action="users" method="get">
             <div class="form-group col-6">
@@ -53,7 +59,7 @@
         </form>
     </div>
     <br>
-<%--Table content are--%>
+    <%--Table content are--%>
     <div>
         <form>
             <table class="table">
@@ -78,12 +84,13 @@
                     <td><%=u.getAge()%>
                     </td>
                     <td style="width: 5px">
-<%--Delete button--%>
-                            <button type="button" value="Delete" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" onclick="setIdForDelete('<%=u.getId()%>');
-                            setNameForDelete('<%=u.getName()%>')"> <i class="fas fa-trash-alt"> </i></button>
+                        <%--Delete button--%>
+                        <button type="button" value="Delete" class="btn btn-danger" data-toggle="modal"
+                                data-target="#exampleModal" onclick="setIdForDelete('<%=u.getId()%>');
+                                setNameForDelete('<%=u.getName()%>')"><i class="fas fa-trash-alt"> </i></button>
                     </td>
                     <td style="width: 5px">
-<%--Edit button--%>
+                        <%--Edit button--%>
                         <form action="userdetail" method="get">
                             <input type="hidden" name="id" value="<%=u.getId()%>">
                             <button type="submit" value="Edit" class="btn btn-secondary"><i
@@ -96,11 +103,12 @@
             </table>
         </form>
     </div>
+
 </div>
 
-
 <!-- Delete Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -110,13 +118,13 @@
                 </button>
             </div>
             <div class="modal-body">
-<%--Span tagine id istifade etmekle js funksiyasi ile html deyer oturulur--%>
+                <%--Span tagine id istifade etmekle js funksiyasi ile html deyer oturulur--%>
                 <h3>Are you sure to delete <span id="nameForDelete"></span>?</h3>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                 <form action="userdetail" method="post">
-<%--id inputuna "idForDelete" id`sinden istifade etmekle js funksiyasi ile yuxaridaki delete duymesini click`leyende id deyeri oturulur--%>
+                    <%--id inputuna "idForDelete" id`sinden istifade etmekle js funksiyasi ile yuxaridaki delete duymesini click`leyende id deyeri oturulur--%>
                     <input type="hidden" name="id" value="" id="idForDelete">
                     <input type="hidden" name="action" value="delete">
                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -124,6 +132,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 </body>
