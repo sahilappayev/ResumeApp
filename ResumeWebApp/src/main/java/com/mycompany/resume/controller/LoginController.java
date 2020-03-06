@@ -5,6 +5,9 @@
  */
 package com.mycompany.resume.controller;
 
+import com.mycompany.dao.inter.UserDaoInter;
+import com.mycompany.entity.User;
+import com.mycompany.main.Context;
 import com.mycompany.resume.config.Config;
 
 import javax.servlet.ServletException;
@@ -20,18 +23,21 @@ import java.io.IOException;
  */
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
-
+    UserDaoInter userDao = Context.instanceUserDao();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
+        User u = userDao.getByEmailAndPassword(email,password);
 
-        if(username == null || password == null || username.trim().isEmpty() || password.trim().isEmpty()){
+        if(u == null){
 //            Config config = Config.createConfig();
+            request.setAttribute("msg","Email or password incorrect!");
             request.getRequestDispatcher("login.jsp").forward(request,response);
 
-        }else {
+        }else{
+            request.getSession().setAttribute("user", u);
             response.sendRedirect("users");
         }
 

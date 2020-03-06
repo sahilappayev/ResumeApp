@@ -22,7 +22,6 @@
 
 %>
 
-
 <div class="container my_container">
     <form action="userdetail" method="POST">
         <div class="form-row">
@@ -70,10 +69,14 @@
                 <input type="text" name="adress" value="<%=u.getAdress()%>" class="form-control">
             </div>
 
-            <div>
-                <input type="hidden" name="action" value="update">
-                <input type="submit" name="save" value="Save" class="btn btn-primary"/>
-            </div>
+            <form action="userdetail" method="post">
+                <div>
+                    <input type="hidden" name="id" value="<%=u.getId()%>">
+                    <input type="hidden" name="action" value="update">
+                    <input type="submit" name="save" value="Save" class="btn btn-primary"/>
+                </div>
+            </form>
+
         </div>
     </form>
 </div>

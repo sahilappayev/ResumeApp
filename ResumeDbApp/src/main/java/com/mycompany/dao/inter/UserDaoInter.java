@@ -5,9 +5,8 @@
  */
 package com.mycompany.dao.inter;
 
-import com.mycompany.dao.AbstractDao;
 import com.mycompany.entity.User;
-import com.mycompany.entity.UserSkill;
+
 import java.util.List;
 
 /**
@@ -16,6 +15,7 @@ import java.util.List;
  */
 public interface UserDaoInter{
     public List<User> getAll(String name, String surname, Integer age);
+    public User getByEmailAndPassword(String email, String password);
     public User getById(int id);
     public boolean add(User u);
     public boolean update(User u);

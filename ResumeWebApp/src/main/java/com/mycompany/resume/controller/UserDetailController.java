@@ -9,15 +9,15 @@ import com.mycompany.dao.inter.UserDaoInter;
 import com.mycompany.entity.Country;
 import com.mycompany.entity.User;
 import com.mycompany.main.Context;
+import com.mycompany.resume.util.ControllerUtil;
 
-import java.io.IOException;
-import java.sql.Date;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.Date;
 
 /**
  *
@@ -35,7 +35,6 @@ public class UserDetailController extends HttpServlet {
             if (idStr == null || idStr.trim().isEmpty()) {
                 throw new IllegalArgumentException("ID is not defined!");
             }
-
             Integer id = Integer.valueOf(idStr);
             User u = userDao.getById(id);
             if (u == null) {
@@ -44,10 +43,8 @@ public class UserDetailController extends HttpServlet {
             request.setAttribute("User", u);
             request.getRequestDispatcher("userdetail.jsp").forward(request,response);
         }catch (Exception ex){
-            ex.printStackTrace();
-            response.sendRedirect("error?msg="+ex.getMessage());
+            ControllerUtil.errorPage(response, ex);
         }
-
     }
 
     @Override

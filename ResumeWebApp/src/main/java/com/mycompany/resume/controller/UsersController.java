@@ -34,10 +34,8 @@ public class UsersController extends HttpServlet {
         if (ageStr != null) {
             age = Integer.parseInt(ageStr);
         }
-
         List<User> users = userDao.getAll(name, surname, age);
         request.setAttribute("users", users);
-
         request.getRequestDispatcher("users.jsp").forward(request, response);
     }
 

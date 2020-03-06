@@ -12,13 +12,13 @@
 <body class="login_bg">
 <%
 
-
 %>
 <div class="container my_container col-4 login_form" >
+    <center><h1 style="color: blue">Login</h1></center>
     <form action="login" method="get">
         <div class="form-group">
-            <label>Username:</label>
-            <input type="text" name="username" placeholder="Enter username" class="form-control" />
+            <label>Email:</label>
+            <input type="email" name="email" placeholder="Enter email: user@example.com" class="form-control" />
         </div>
         <div class="form-group ">
             <label>Password:</label>
@@ -28,7 +28,7 @@
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Keep me logged in</label>
         </div>
-        <div>
+        <div style="margin-right: 5px ; width: 300px">
             <a href="">Did you forget your password?</a>
             <input type="submit" name="login" value="Login" class="btn btn-primary">
         </div>

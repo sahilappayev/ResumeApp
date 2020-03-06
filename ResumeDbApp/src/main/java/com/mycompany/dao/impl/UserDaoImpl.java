@@ -31,6 +31,7 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
         int age = rs.getInt("age");
         String phone = rs.getString("phone");
         String mail = rs.getString("email");
+        String password = rs.getString("password");
         String adress = rs.getString("adress");
         String profileDescription = rs.getString("profile_description");
         Date birthDate = rs.getDate("birthdate");
@@ -42,7 +43,24 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
         Country birthPlace = new Country(birthPlaceId, birthPlaceStr, null);
         Country nationality = new Country(nationalityId, null, nationalityStr);
 
-        return new User(id, name, surname, age, phone, mail, adress, birthDate, birthPlace, nationality, profileDescription);
+        return new User(id, name, surname, age, phone, mail, password, adress, birthDate, birthPlace, nationality, profileDescription);
+    }
+
+    private User getUserSimple(ResultSet rs) throws Exception {
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        String surname = rs.getString("surname");
+        int age = rs.getInt("age");
+        String phone = rs.getString("phone");
+        String mail = rs.getString("email");
+        String adress = rs.getString("adress");
+        String profileDescription = rs.getString("profile_description");
+        Date birthDate = rs.getDate("birthdate");
+        int birthPlaceId = rs.getInt("birthplace_id");
+        int nationalityId = rs.getInt("nationality_id");
+        String password = rs.getString("password");
+
+        return new User(id, name, surname, age, phone, mail,password, adress, birthDate, null, null, profileDescription);
     }
 
     @Override
@@ -100,6 +118,23 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public User getByEmailAndPassword(String email, String password) {
+        User result = null;
+        try(Connection connection = connect()){
+            PreparedStatement statement = connection.prepareStatement("select * from user where email = ? and password = ?");
+            statement.setString(1, email);
+            statement.setString(2, password);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                result = getUserSimple(rs);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return result;
     }

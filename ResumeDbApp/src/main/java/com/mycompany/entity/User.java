@@ -19,6 +19,7 @@ public class User {
     private int age;
     private String phone;
     private String email;
+    private String password;
     private String adress;
     private Date birthDate;
     private Country birthPlace;
@@ -52,7 +53,7 @@ public class User {
     
     
     
-    public User(Integer id, String name, String surname, int age, String phone, String email, String adress, Date birthdate, Country birthplace, Country natioanality, String prifileDescription) {
+    public User(Integer id, String name, String surname, int age, String phone, String email, String password, String adress, Date birthdate, Country birthplace, Country natioanality, String prifileDescription) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -64,8 +65,17 @@ public class User {
         this.natioanality = natioanality;
         this.profileDescription = prifileDescription;
         this.adress = adress;
+        this.password = password;
     }
-    
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Integer getId() {
         return id;
     }
