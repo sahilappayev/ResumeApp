@@ -5,6 +5,7 @@
  */
 package com.mycompany.dao.impl;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.mycompany.entity.Country;
 import com.mycompany.entity.User;
 import com.mycompany.dao.AbstractDao;
@@ -23,6 +24,8 @@ import java.util.List;
  * @author SahilAppayev
  */
 public class UserDaoImpl extends AbstractDao implements UserDaoInter {
+
+    private BCrypt.Hasher crypt = BCrypt.withDefaults();
 
     private User getUser(ResultSet rs) throws Exception {
         int id = rs.getInt("id");
@@ -87,8 +90,6 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
                 sql += "and u.age =?";
             }
 
-
-
             PreparedStatement statement = connection.prepareStatement(sql);
 
             int i = 0;
@@ -123,12 +124,11 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
     }
 
     @Override
-    public User getByEmailAndPassword(String email, String password) {
+    public User getByEmail(String email) {
         User result = null;
         try(Connection connection = connect()){
-            PreparedStatement statement = connection.prepareStatement("select * from user where email = ? and password = ?");
+            PreparedStatement statement = connection.prepareStatement("select * from user where email = ?");
             statement.setString(1, email);
-            statement.setString(2, password);
             ResultSet rs = statement.executeQuery();
             while (rs.next()){
                 result = getUserSimple(rs);
@@ -177,7 +177,8 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
                     + " profile_description = ?,"
                     + "birthdate = ?,"
                     + "birthplace_id = ?,"
-                    + "nationality_id = ?"
+                    + "nationality_id = ?,"
+                    + "password = ?"
                     + " where id = ?");
             statement.setString(1, u.getName());
             statement.setString(2, u.getSurname());
@@ -189,7 +190,8 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
             statement.setDate(8, u.getBirthDate());
             statement.setInt(9, u.getBirthPlace().getId());
             statement.setInt(10, u.getNatioanality().getId());
-            statement.setInt(11, u.getId());
+            statement.setString(11,crypt.hashToString(4,u.getPassword().toCharArray()));
+            statement.setInt(12, u.getId());
             return statement.execute();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -212,8 +214,8 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
     public boolean add(User u) {
         boolean b;
         try (Connection connection = connect()) {
-            PreparedStatement statement = connection.prepareStatement("insert into resume.user (name, surname, age, phone, email, adress, profile_description, birthdate, birthplace_id, nationality_id)"
-                    + "valuse(?,?,?,?,?,?,?,?,?,?) where id = ?", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement("insert into resume.user (name, surname, age, phone, email, adress, profile_description, birthdate, birthplace_id, nationality_id, password)"
+                    + "valuse(?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, u.getName());
             statement.setString(2, u.getSurname());
             statement.setInt(3, u.getAge());
@@ -224,7 +226,7 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
             statement.setDate(8, u.getBirthDate());
             statement.setInt(9, u.getBirthPlace().getId());
             statement.setInt(10, u.getNatioanality().getId());
-            statement.setInt(11, u.getId());
+            statement.setString(11,crypt.hashToString(4,u.getPassword().toCharArray()));
             b = statement.execute();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {

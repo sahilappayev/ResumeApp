@@ -5,9 +5,7 @@
 --%>
 
 <%@page import="com.mycompany.entity.User" %>
-<%@page import="com.mycompany.main.Context" %>
-<%@page import="com.mycompany.dao.inter.UserDaoInter" %>
-<%@ page import="java.util.List" %>
+<%@page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -33,15 +31,16 @@
 <body class="users_bg">
 
 <%
-    User user = (User) request.getSession().getAttribute("user"); //LoggedInUser
+    User user = (User) request.getSession().getAttribute("loggedInUser"); //LoggedInUser
 
     List<User> users = (List<User>) request.getAttribute("users");//AllUsers
 %>
 
 <div class="container my_container">
     <%-- Logged in User--%>
-    <center><h1 style="color: blue"> Welcome <%=user.getName()%>!</h1></center>
-
+        <div>
+            <center><h1 style="color: blue"> Welcome <%=user.getName() + " " + user.getSurname() %>!</h1></center>
+        </div>
     <%--Search are--%>
     <div>
         <form action="users" method="get">
@@ -85,9 +84,11 @@
                     </td>
                     <td style="width: 5px">
                         <%--Delete button--%>
-                        <button type="button" value="Delete" class="btn btn-danger" data-toggle="modal"
-                                data-target="#exampleModal" onclick="setIdForDelete('<%=u.getId()%>');
-                                setNameForDelete('<%=u.getName()%>')"><i class="fas fa-trash-alt"> </i></button>
+                        <form action="userdetail" method="post">
+                            <button type="button" value="Delete" class="btn btn-danger" data-toggle="modal"
+                                    data-target="#exampleModal" onclick="setIdForDelete('<%=u.getId()%>');
+                                    setNameForDelete('<%=u.getName()%>')"><i class="fas fa-trash-alt"> </i></button>
+                        </form>
                     </td>
                     <td style="width: 5px">
                         <%--Edit button--%>

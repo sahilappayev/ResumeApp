@@ -18,6 +18,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.19</version>
         </dependency>
-
+        <!-- Thanks for using https://jar-download.com -->
+        <dependency>
+            <groupId>at.favre.lib</groupId>
+            <artifactId>bcrypt</artifactId>
+            <version>0.4.1</version>
+        </dependency>
     </dependencies>
 </project>

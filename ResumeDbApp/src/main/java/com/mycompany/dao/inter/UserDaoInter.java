@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface UserDaoInter{
     public List<User> getAll(String name, String surname, Integer age);
-    public User getByEmailAndPassword(String email, String password);
+    public User getByEmail(String email);
     public User getById(int id);
     public boolean add(User u);
     public boolean update(User u);
