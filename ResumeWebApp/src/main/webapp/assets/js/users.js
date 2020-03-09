@@ -9,10 +9,8 @@ function setNameForDelete(name){
 
 function setLoginMessage() {
     var elemInput = document.getElementById("messageInput");
-    var elemMessage = document.getElementById("messageModal");
-    var visible = elemMessage.getAttribute("aria-hidden");
     if(elemInput.value != null){
-        visible = false;
+       elemInput.type="text";
     }
 
 }

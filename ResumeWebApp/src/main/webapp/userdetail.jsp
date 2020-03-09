@@ -23,6 +23,7 @@
 %>
 
 <div class="container my_container">
+    <center><h1 style="color: blue">User Details</h1></center>
     <form action="userdetail" method="POST">
         <div class="form-row">
             <div class="form-group col-md-4">

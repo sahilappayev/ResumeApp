@@ -9,14 +9,12 @@
 <body class="login_bg">
 <%
     String msg = (String) request.getAttribute("msg");
-    System.out.println(msg);
 %>
 <div class="container my_container col-4 login_form" >
-    <center><h1 style="color: blue">Login</h1></center>
-
-    <input type="hidden" value="<%=msg%>" data-toggle="modal" id="messageInput" data-target="#messageModal">
 
     <form action="login" method="post">
+        <center><h1 style="color: blue">Login</h1></center>
+        <input type="hidden" value="<%=msg%>" id="messageInput" style="color: red">
         <div class="form-group">
             <label>Email:</label>
             <input type="email" name="email" placeholder="Enter email: user@example.com" class="form-control" />
@@ -34,22 +32,6 @@
             <input type="submit" name="login" value="Login" class="btn btn-primary">
         </div>
     </form>
-</div>
-
-<!-- Message Modal -->
-<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <%--Span tagine id istifade etmekle js funksiyasi ile html deyer oturulur--%>
-                <h3><span id="loginMessage" style="color: red"><%=msg%></span></h3>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
 </div>
 
 </body>
