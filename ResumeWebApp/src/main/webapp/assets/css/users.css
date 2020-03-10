@@ -16,6 +16,12 @@
     background-attachment: fixed;
 }
 
+.reset_bg{
+    background-image: url("../images/resetpswrd.png");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 .login_form{
     margin: 100px auto;
 }

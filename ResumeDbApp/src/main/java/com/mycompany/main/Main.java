@@ -18,7 +18,7 @@ public class Main {
     // bazani temsil eden klasslara model ve ya entity deyilir
     public static void main(String[] args) {
         UserDaoInter userDao = Context.instanceUserDao();
-        User u = userDao.getById(3);
+        User u = userDao.getById(1);
         System.out.println(u.getName());
         Scanner sc = new Scanner(System.in);
         System.out.println("Set user password:");
