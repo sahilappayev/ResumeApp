@@ -43,15 +43,16 @@ public class LoginController extends HttpServlet {
             String password = request.getParameter("password");
             User u = userDao.getByEmail(email);
             if (u == null) {
-                request.setAttribute("msg", "User doesn`t exist!");
-                response.sendRedirect("login");
-//                throw new IllegalArgumentException("User doesn`t exist!");
+//                request.setAttribute("msg", "User doesn`t exist!");
+//                response.sendRedirect("login");
+                throw new IllegalArgumentException("User doesn`t exist!");
             }
             BCrypt.Result rs = verifyer.verify(password.toCharArray(), u.getPassword().toCharArray());
+            System.out.println(rs.verified);
             if (!rs.verified) {
-                request.setAttribute("msg", "Password is incorrect!");
-                response.sendRedirect("login");
-//                throw new IllegalArgumentException("Password is incorrect!");
+//                request.setAttribute("msg", "Password is incorrect!");
+//                response.sendRedirect("login");
+                throw new IllegalArgumentException("Password is incorrect!");
             }else {
                 request.getSession().setAttribute("loggedInUser", u);
                 response.sendRedirect("users");
