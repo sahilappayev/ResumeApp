@@ -38,9 +38,17 @@
 
 <div class="container my_container">
     <%-- Logged in User--%>
-        <div>
-            <center><h1 style="color: blue"> Welcome <%=user.getName() + " " + user.getSurname() %>!</h1></center>
+        <div class="form-row">
+            <div class="form-group" style="margin-right: 0">
+                <h1 style="color: blue"> Welcome <%=user.getName() + " " + user.getSurname() %>!</h1>
+            </div>
+            <div class="form-group" style="margin-right: 15px">
+                <form action="login" method="get">
+                    <input type="submit" name="logout" value="Logout" class="btn btn-secondary form-control">
+                </form>
+            </div>
         </div>
+
     <%--Search are--%>
     <div>
         <form action="users" method="get">

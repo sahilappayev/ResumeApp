@@ -241,4 +241,9 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
         }
         return b;
     }
+
+    public boolean resetPassword(User u, String password){
+        u.setPassword(password);
+        return update(u);
+    }
 }

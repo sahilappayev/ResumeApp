@@ -15,7 +15,8 @@ public class SecurityFilter implements Filter {
             HttpServletResponse res = (HttpServletResponse) response;
             HttpServletRequest req = (HttpServletRequest) request;
 
-            if(!req.getRequestURI().contains("/login") && !req.getRequestURI().contains("/error") && req.getSession().getAttribute("loggedInUser")==null){
+            if(!req.getRequestURI().contains("/login") && !req.getRequestURI().contains("/error")
+                    && req.getSession().getAttribute("loggedInUser")==null && !req.getRequestURI().contains("/reset")){
                 res.sendRedirect("login");
             }else{
                 chain.doFilter(request,response);

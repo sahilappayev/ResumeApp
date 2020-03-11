@@ -21,19 +21,15 @@ import java.io.IOException;
 /**
  * @author SahilAppayev
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/login"})
-public class LoginController extends HttpServlet {
+@WebServlet(name = "ResetController", urlPatterns = {"/reset"})
+public class ResetController extends HttpServlet {
     UserDaoInter userDao = Context.instanceUserDao();
     BCrypt.Verifyer verifyer = BCrypt.verifyer();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String logout = request.getParameter("logout");
-        if("Logout".equals(logout)){
-            request.getSession().invalidate();
-        }
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        request.getRequestDispatcher("reset.jsp").forward(request, response);
     }
 
     @Override
@@ -45,16 +41,13 @@ public class LoginController extends HttpServlet {
             if (u == null) {
                 request.setAttribute("msg", "User doesn`t exist!");
                 response.sendRedirect("login");
-//                throw new IllegalArgumentException("User doesn`t exist!");
             }
             BCrypt.Result rs = verifyer.verify(password.toCharArray(), u.getPassword().toCharArray());
             if (!rs.verified) {
                 request.setAttribute("msg", "Password is incorrect!");
                 response.sendRedirect("login");
-//                throw new IllegalArgumentException("Password is incorrect!");
             }else {
-                request.getSession().setAttribute("loggedInUser", u);
-                response.sendRedirect("users");
+                response.sendRedirect("login");
             }
         } catch (Exception ex) {
             ControllerUtil.errorPage(response, ex);

@@ -28,7 +28,7 @@
             <label class="form-check-label" for="exampleCheck1">Keep me logged in</label>
         </div>
         <div style="margin-right: 5px ; width: 300px">
-            <a href="">Did you forget your password?</a>
+            <a href="reset">Did you forget your password?</a>
             <input type="submit" name="login" value="Login" class="btn btn-primary">
         </div>
     </form>
