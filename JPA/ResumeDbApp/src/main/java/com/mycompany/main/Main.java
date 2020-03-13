@@ -7,7 +7,6 @@ package com.mycompany.main;
 
 import com.mycompany.dao.inter.UserDaoInter;
 import com.mycompany.entity.User;
-
 import java.util.Scanner;
 
 /**
@@ -19,9 +18,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         UserDaoInter userDao = Context.instanceUserDao();
-        User u = userDao.getById(2);
-        System.out.println("Set user password:");
-        String password = sc.next();
-        userDao.resetPassword(u, password);
+        User u = userDao.getByEmail("sahilappayev@gmail.com");
+        System.out.println(u.getName());
     }
 }

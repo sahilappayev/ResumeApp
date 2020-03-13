@@ -9,13 +9,12 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.mycompany.entity.User;
 import com.mycompany.dao.AbstractDao;
 import com.mycompany.dao.inter.UserDaoInter;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  * @author SahilAppayev
@@ -26,74 +25,101 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
 
     @Override
     public List<User> getAll(String name, String surname, Integer age) {
-        List<User> result = new ArrayList<>();
-        try (Connection connection = connect()) {
+        EntityManager em = em();
+        String jpql = "select u from User u where 1=1 ";
+        if (name != null && !name.trim().isEmpty()) {
+            jpql += "and u.name = :name";
+        }
+        if (surname != null && !surname.trim().isEmpty()) {
+            jpql += "and u.surname = :surname";
+        }
+        if (age != null) {
+            jpql += "and u.age = :";
+        }
+        Query q = em.createQuery(jpql, User.class);
 
-            String sql = "SELECT"
-                    + "	u.*,"
-                    + "	c.country_name birthplace,"
-                    + "	n.nationality "
-                    + "FROM"
-                    + "	USER u"
-                    + "	LEFT JOIN country c ON u.birthplace_id = c.id"
-                    + "	LEFT JOIN country n ON u.nationality_id = n.id where 1=1 ";
-
-            if (name != null && !name.trim().isEmpty()) {
-                sql += "and u.name =?";
-            }
-            if (surname != null && !surname.trim().isEmpty()) {
-                sql += "and u.surname =?";
-            }
-            if (age != null) {
-                sql += "and u.age =?";
-            }
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-
-            int i = 0;
-
-            if (name != null && !name.trim().isEmpty()) {
+        if (name != null && !name.trim().isEmpty()) {
 //                System.out.println("Logged name");
-                i++;
-                statement.setString(i, name);
-            }
-            if (surname != null && !surname.trim().isEmpty()) {
+            q.setParameter("name", name);
+        }
+        if (surname != null && !surname.trim().isEmpty()) {
 //                System.out.println("Logged surname");
-                i++;
-                statement.setString(i, surname);
-            }
-            if (age != null) {
+            q.setParameter("surname", surname);
+        }
+        if (age != null) {
 //                System.out.println("Logged age");
-                i++;
-                statement.setInt(i, age);
-            }
-//            System.out.println(sql);
+            q.setParameter("age", age);
+        }
+//            System.out.println(jpql);
 //            System.out.println("Name: "+name+"  Surname: "+surname+"  Age: "+age+"  i: "+i );
-            statement.execute();
-            ResultSet rs = statement.getResultSet();
-            while (rs.next()) {
-//                User user = getUser(rs);
-//                result.add(user);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        return q.getResultList();
+    }
+
+        //JPQL
+//    @Override
+//    public User getByEmail(String email) {
+//        User result = null;
+//        EntityManager em = em();
+//        Query q = em.createQuery("SELECT u FROM User u WHERE u.email= :email", User.class);
+//        q.setParameter("email", email);
+//        List<User> users = q.getResultList();
+//        if (users.size() == 1) {
+//            result = users.get(0);
+//        }
+//        return result;
+//    }
+    
+        //CriteriaBuilder
+//    @Override
+//    public User getByEmail(String email) {
+//        User result = null;
+//        EntityManager em = em();
+//        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+//        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
+//        Root<User> root = criteriaQuery.from(User.class);
+//        criteriaQuery.where(criteriaBuilder.equal(root.get("email"),email));//where shertlerin , ile ayirmaqla artirmaq olar
+//        Query query = em.createQuery(criteriaQuery);
+//        List<User> users = query.getResultList();
+//        if (users.size() == 1) {
+//            result = users.get(0);
+//        }
+//        return result;
+//    }
+    
+    //NativeSQL
+//    @Override
+//    public User getByEmail(String email) {
+//        User result = null;
+//        EntityManager em = em();
+//        Query query = em.createNativeQuery("select * from user where email = ?", User.class);
+//        query.setParameter(1, email);
+//        List<User> users = query.getResultList();
+//        if (users.size() == 1) {
+//            result = users.get(0);
+//        }
+//        return result;
+//    }
+    
+    //NamedQuery
+    @Override
+    public User getByEmail(String email) {
+        User result = null;
+        EntityManager em = em();
+        Query query = em.createNamedQuery("User.findByEmail", User.class);
+        query.setParameter("email", email);
+        List<User> users = query.getResultList();
+        if (users.size() == 1) {
+            result = users.get(0);
         }
         return result;
     }
 
     @Override
-    public User getByEmail(String email) {
-        User result = null;
-        return result;
-    }
-
-    @Override
     public User getById(int userId) {
-        User result = null;
         EntityManager em = em();
-        result = em.find(User.class, userId);
+        User u = em.find(User.class, userId);
         em.close();
-        return result;
+        return u;
     }
 
     @Override

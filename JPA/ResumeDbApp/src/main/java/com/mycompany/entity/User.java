@@ -32,18 +32,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "user")
-//@NamedQueries({
-//    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-//    @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
-//    @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name"),
-//    @NamedQuery(name = "User.findBySurname", query = "SELECT u FROM User u WHERE u.surname = :surname"),
-//    @NamedQuery(name = "User.findByAge", query = "SELECT u FROM User u WHERE u.age = :age"),
-//    @NamedQuery(name = "User.findByPhone", query = "SELECT u FROM User u WHERE u.phone = :phone"),
-//    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-//    @NamedQuery(name = "User.findByAdress", query = "SELECT u FROM User u WHERE u.adress = :adress"),
-//    @NamedQuery(name = "User.findByBirthdate", query = "SELECT u FROM User u WHERE u.birthdate = :birthdate"),
-//    @NamedQuery(name = "User.findByPhoto", query = "SELECT u FROM User u WHERE u.photo = :photo"),
-//    @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")})
+@NamedQueries(
+    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"))
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -82,10 +72,10 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<EmploymentHistory> employmentHistoryList;
     @JoinColumn(name = "birthplace_id", referencedColumnName = "id")
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne
     private Country birthPlace;
     @JoinColumn(name = "nationality_id", referencedColumnName = "id")
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne
     private Country nationality;
 
     public User() {

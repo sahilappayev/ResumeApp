@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.mycompany</groupId>
             <artifactId>ResumeDbApp</artifactId>
-            <version>1.0</version>
+            <version>1.0-jpa</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>
