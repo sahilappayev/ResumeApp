@@ -8,13 +8,12 @@ package com.mycompany.dao.impl;
 import com.mycompany.dao.AbstractDao;
 import com.mycompany.dao.inter.CountryDaoInter;
 import com.mycompany.entity.Country;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -24,86 +23,58 @@ public class CountryDaoImpl extends AbstractDao implements CountryDaoInter {
 
     @Override
     public List<Country> getAll() {
-        List<Country> result = new ArrayList<>();
-        try (Connection connection = connect()) {
-            Statement statement = connection.createStatement();
-            statement.execute("select * from country");
-            ResultSet rs = statement.getResultSet();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String countryName = rs.getString("country_name");
-                String nationality = rs.getString("nationality");
-                result.add(new Country(id, countryName, nationality));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return result;
+        EntityManager em = em();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery();
+        Root<Country> root = cq.from(Country.class);
+        cq.select(root);
+        Query query = em.createQuery(cq);
+        return query.getResultList();
     }
 
     @Override
     public Country getById(int countryId) {
-        Country result = new Country();
-        try (Connection connection = connect()) {
-            Statement statement = connection.createStatement();
-            statement.execute("select * from country where id=" + countryId);
-            ResultSet rs = statement.getResultSet();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String countryName = rs.getString("country_name");
-                String nationality = rs.getString("nationality");
-                result = new Country(id, countryName, nationality);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        Country result = null;
+        EntityManager em = em();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery();
+        Root<Country> root = cq.from(Country.class);
+        cq.select(root).where(cb.equal(root.get("id"),countryId));
+        Query query = em.createQuery(cq);
+        List<Country> countries = query.getResultList();
+        if(countries.size() == 1){
+            result = countries.get(0);
         }
         return result;
     }
 
     @Override
     public boolean add(Country c) {
-        boolean b;
-        try (Connection connection = connect()) {
-            PreparedStatement statement = connection.prepareStatement("insert into skill (country_name, nationality) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, c.getCountryName());
-            statement.setString(2, c.getNationality());
-            b = statement.execute();
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    c.setId(generatedKeys.getInt(1));
-                } else {
-                    throw new SQLException("Operation failed, no ID obtained!");
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
-        return b;
+        EntityManager em = em();
+        em.getTransaction().begin();
+        em.persist(c);
+        em.getTransaction().commit();
+        em.close();
+        return true;
     }
 
     @Override
     public boolean update(Country c) {
-        try (Connection connection = connect()) {
-            PreparedStatement statement = connection.prepareStatement("update skill set country_name = ?, nationality = ? where id=" + c.getId());
-            statement.setString(1, c.getCountryName());
-            statement.setString(2, c.getNationality());
-            return statement.execute();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
+        EntityManager em = em();
+        em.getTransaction().begin();
+        em.merge(c);
+        em.getTransaction().commit();
+        return true;
     }
 
     @Override
     public boolean delete(int id) {
-        try (Connection connection = connect()) {
-            Statement statement = connection.createStatement();
-            return statement.execute("delete from country where id=" + id);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
+        EntityManager em = em();
+        em.getTransaction().begin();
+        Country c = em.find(Country.class, id);
+        em.remove(c);
+        em.getTransaction().commit();
+        return true;
     }
 
 }

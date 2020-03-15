@@ -70,21 +70,21 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
 //    }
     
         //CriteriaBuilder
-//    @Override
-//    public User getByEmail(String email) {
-//        User result = null;
-//        EntityManager em = em();
-//        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-//        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
-//        Root<User> root = criteriaQuery.from(User.class);
-//        criteriaQuery.where(criteriaBuilder.equal(root.get("email"),email));//where shertlerin , ile ayirmaqla artirmaq olar
-//        Query query = em.createQuery(criteriaQuery);
-//        List<User> users = query.getResultList();
-//        if (users.size() == 1) {
-//            result = users.get(0);
-//        }
-//        return result;
-//    }
+    @Override
+    public User getByEmail(String email) {
+        User result = null;
+        EntityManager em = em();
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
+        Root<User> root = criteriaQuery.from(User.class);
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("email"),email));//where shertlerin , ile ayirmaqla artirmaq olar
+        Query query = em.createQuery(criteriaQuery);
+        List<User> users = query.getResultList();
+        if (users.size() == 1) {
+            result = users.get(0);
+        }
+        return result;
+    }
     
     //NativeSQL
 //    @Override
@@ -101,18 +101,18 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
 //    }
     
     //NamedQuery
-    @Override
-    public User getByEmail(String email) {
-        User result = null;
-        EntityManager em = em();
-        Query query = em.createNamedQuery("User.findByEmail", User.class);
-        query.setParameter("email", email);
-        List<User> users = query.getResultList();
-        if (users.size() == 1) {
-            result = users.get(0);
-        }
-        return result;
-    }
+//    @Override
+//    public User getByEmail(String email) {
+//        User result = null;
+//        EntityManager em = em();
+//        Query query = em.createNamedQuery("User.findByEmail", User.class);
+//        query.setParameter("email", email);
+//        List<User> users = query.getResultList();
+//        if (users.size() == 1) {
+//            result = users.get(0);
+//        }
+//        return result;
+//    }
 
     @Override
     public User getById(int userId) {
@@ -148,7 +148,7 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
         u.setPassword(crypt.hashToString(4, u.getPassword().toCharArray()));
         EntityManager em = em();
         em.getTransaction().begin();
-        em.remove(u);
+        em.persist(u);
         em.getTransaction().commit();
         em.close();
         return true;

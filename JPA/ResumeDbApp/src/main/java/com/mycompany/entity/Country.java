@@ -42,9 +42,9 @@ public class Country implements Serializable {
     @Column(name = "nationality")
     private String nationality;
     @OneToMany(mappedBy = "birthPlace")
-    private List<User> userList;
+    private List<User> userListBP;
     @OneToMany(mappedBy = "nationality")
-    private List<User> userList1;
+    private List<User> userListNat;
 
     public Country() {
     }
@@ -83,20 +83,20 @@ public class Country implements Serializable {
         this.nationality = nationality;
     }
 
-    public List<User> getUserList() {
-        return userList;
+    public List<User> getUserListBP() {
+        return userListBP;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public void setUserListBP(List<User> userList) {
+        this.userListBP = userList;
     }
 
-    public List<User> getUserList1() {
-        return userList1;
+    public List<User> getUserListNat() {
+        return userListNat;
     }
 
-    public void setUserList1(List<User> userList1) {
-        this.userList1 = userList1;
+    public void setUserListNat(List<User> userList) {
+        this.userListNat = userList;
     }
 
     @Override
