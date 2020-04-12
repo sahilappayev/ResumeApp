@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/ResumeAppSpring.iml" filepath="$PROJECT_DIR$/.idea/ResumeAppSpring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ResumeDbAppJPASpring/ResumeDbAppJPASpring.iml" filepath="$PROJECT_DIR$/ResumeDbAppJPASpring/ResumeDbAppJPASpring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ResumeWebAppSpring/ResumeWebAppSpring.iml" filepath="$PROJECT_DIR$/ResumeWebAppSpring/ResumeWebAppSpring.iml" />
+    </modules>
+  </component>
+</project>
