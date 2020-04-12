@@ -7,9 +7,9 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>ResumeDbApp</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.mycompany</groupId>
+            <artifactId>ResumeDbAppJDBC</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
     <properties>
