@@ -11,7 +11,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>User Details</title>
-    <link rel="stylesheet" href="assets/css/users.css">
+    <link rel="stylesheet" href="assets/css/users.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
@@ -19,37 +19,38 @@
 
 <%
     User u = (User) request.getAttribute("User");
-
 %>
 
 <div class="container my_container">
+
     <center><h1 style="color: blue">User Details</h1></center>
+
     <form action="userdetail" method="POST">
         <div class="form-row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-4">
                 <label> Name:</label>
                 <input type="hidden" name="id" value="<%=u.getId()%>"/>
                 <input type="text" name="name" value="<%=u.getName()%>" class="form-control"/>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-4">
                 <label> Surname:</label>
                 <input type="text" name="surname" value="<%=u.getSurname()%>" class="form-control">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-4">
                 <label>Age:</label>
                 <input type="text" name="age" value="<%=u.getAge()%>" class="form-control">
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-4">
                 <label>Birth date:</label>
                 <input type="date" name="date" value="<%=u.getBirthDate()%>" class="form-control">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-4">
                 <label>Birth place:</label>
                 <input type="text" name="place" value="<%=u.getBirthPlace().getCountryName()%>" class="form-control">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-4">
                 <label>Nationality:</label>
                 <input type="text" name="nationalty" value="<%=u.getNationality().getNationality()%>"
                        class="form-control">
@@ -61,7 +62,7 @@
                 <textarea name="profile" class="form-control"> <%=u.getProfileDescription()%>
                 </textarea>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-6">
                 <label>Phone:</label>
                 <input type="tel" name="phone" value="<%=u.getPhone()%>" class="form-control">
             </div>
@@ -77,7 +78,6 @@
                     <input type="submit" name="save" value="Save" class="btn btn-primary"/>
                 </div>
             </form>
-
         </div>
     </form>
 </div>

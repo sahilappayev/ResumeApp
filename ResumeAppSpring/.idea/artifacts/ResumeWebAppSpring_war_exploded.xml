@@ -33,7 +33,6 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-web:5.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:5.2.5.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:5.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot:2.2.6.RELEASE" />
@@ -45,6 +44,11 @@
           <element id="library" level="project" name="Maven: org.hibernate.validator:hibernate-validator:6.0.18.Final" />
           <element id="library" level="project" name="Maven: org.jboss.logging:jboss-logging:3.4.1.Final" />
           <element id="library" level="project" name="Maven: com.fasterxml:classmate:1.5.1" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-security:2.2.6.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.2.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:5.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:5.2.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:5.2.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.30" />
           <element id="library" level="project" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" />
           <element id="library" level="project" name="Maven: jakarta.activation:jakarta.activation-api:1.2.2" />

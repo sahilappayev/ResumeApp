@@ -36,6 +36,7 @@ public class PanelSkills extends javax.swing.JPanel {
 
     private void fillWindow() {
         config.setSkills(skillDao.getAll());
+        cbSkills.removeAllItems();
         for (Skill s : config.getSkills()) {
             cbSkills.addItem(s);
         }

@@ -9,8 +9,8 @@ function setNameForDelete(name){
 
 function setLoginMessage() {
     var elemInput = document.getElementById("messageInput");
-    if(elemInput.value != null){
-       elemInput.type="text";
+    if(elemInput.value != "null"){
+       alert(elemInput.value);
     }
 
 }

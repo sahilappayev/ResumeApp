@@ -161,7 +161,7 @@ public class UserDaoImpl extends AbstractDao implements UserDaoInter {
 
     @Override
     public boolean resetPassword(User u, String password) {
-        u.setPassword(crypt.hashToString(4, u.getPassword().toCharArray()));
+        u.setPassword(crypt.hashToString(4, password.toCharArray()));
         return update(u);
     }
 }

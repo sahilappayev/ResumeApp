@@ -1,6 +1,8 @@
 package com.mycompany.controller;
 
 
+import com.mycompany.service.inter.UserServiceInter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,14 +14,11 @@ import java.util.List;
 @Controller
 public class LoginController {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/login")
-    public ModelAndView index(
-            @RequestParam(value = "value", required = false) Object value) {
+    @Autowired
+    UserServiceInter userService;
 
-        // write code here
-        List<?> list = new ArrayList<>();
-        ModelAndView mv = new ModelAndView("viewName");
-        mv.addObject("list", list);
-        return mv;
+    @RequestMapping(method = {RequestMethod.GET}, value = "/login")
+    public String index() {
+        return "login";
     }
 }

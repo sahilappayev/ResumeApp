@@ -20,7 +20,5 @@ public class Main {
 //        UserDaoInter userDao = Context.instanceUserDao();
 //        User u = userDao.getByEmail("sahilappayev@gmail.com");
 //        userDao.resetPassword(u, "12345");
-
-//        System.out.println(userDao.getAll(null, null, null));
     }
 }

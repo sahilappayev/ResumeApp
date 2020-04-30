@@ -157,6 +157,9 @@ public class MainUser extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         String name = txtName.getText();
         String surName = txtSurname.getText();
+        config.getLoggedInUser().setName(name);
+        config.getLoggedInUser().setSurname(surName);
+        userDao.update(config.getLoggedInUser());
         pnlProfile.saveBut();
         pnlDetails.saveBtn();
         pnlSkills.saveBtn();
