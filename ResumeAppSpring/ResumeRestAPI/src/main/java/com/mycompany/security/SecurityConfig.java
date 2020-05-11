@@ -31,8 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //token contain in DB
     //https://stackoverflow.com/questions/20958166/what-are-the-steps-to-implement-springs-token-store-as-a-mysql-file#
-    @Autowired
-    DataSource defaultDataSource;
+//    @Autowired
+//    DataSource defaultDataSource;
 
     @Bean
     @Override
@@ -54,8 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public TokenStore tokenStore(){
-        return new JdbcTokenStore(defaultDataSource); //token store in DB
-//        return new JwtTokenStore(accessTokenConverter());
+//        return new JdbcTokenStore(defaultDataSource); //token store in DB
+        return new JwtTokenStore(accessTokenConverter());
     }
 
     @Bean
