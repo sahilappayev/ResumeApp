@@ -1,1 +1,16 @@
-workspace.xml
+/target/
+.classpath
+.project
+.settings
+.settings/*
+.DC_Store
+/*.jar
+/*.gz
+.metadata/
+/classes
+/test-classes
+/META_INF
+/.idea
+*.iml
+*.jks
+/out
