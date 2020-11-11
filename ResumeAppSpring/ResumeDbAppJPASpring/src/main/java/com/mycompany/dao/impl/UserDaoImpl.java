@@ -26,6 +26,7 @@ import java.util.List;
 @Scope(value = "prototype")
 //@Transactional
 public class UserDaoImpl implements UserDaoInter {
+
     @PersistenceContext
     EntityManager em;
 

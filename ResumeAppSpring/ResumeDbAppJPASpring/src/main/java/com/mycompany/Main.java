@@ -2,6 +2,7 @@ package com.mycompany;
 
 import com.mycompany.entity.User;
 import com.mycompany.repository.UserRepository;
+import com.mycompany.service.impl.UserServiceImpl;
 import com.mycompany.service.inter.UserServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

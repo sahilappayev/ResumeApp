@@ -25,8 +25,9 @@ import java.util.List;
 @Scope(value = "prototype")
 @Transactional
 public class UserServiceImpl implements UserServiceInter {
-    @PersistenceContext
-    EntityManager em;
+
+//    @PersistenceContext
+//    EntityManager em;
 
     @Autowired
     @Qualifier("userDao1")
